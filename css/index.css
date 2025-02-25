@@ -1,0 +1,109 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e8f5e9; /* Light green background */
+}
+
+header {
+    background-color: #4caf50; /* Green header */
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+.menu-container {
+    display: flex; /* Use flexbox layout */
+    justify-content: center; /* Center items horizontally */
+}
+
+.menu-item {
+    text-decoration: none;
+    color: black;
+    flex-wrap: wrap ;
+    border: 1px solid #4caf50; /* Green border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px;
+    margin: 10px;
+    width: 20%;
+    height: 250px;
+    text-align: center;
+}
+
+section {
+    padding: 20px;
+    text-align: center;
+}
+
+.auction-container {
+    display: flex; /* Use flexbox layout */
+    justify-content: center; /* Center items horizontally */ 
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.auction-item {
+    width: 30%;
+    min-width: 250px; /* Prevents items from shrinking too much */
+    height: 250px;
+    background-color: #ffffff;
+    border: 1px solid #c8e6c9;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.auction-container:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+
+.auction-item img {
+    max-width: 100%;
+    height: auto;
+}
+
+.filters {
+    margin: 20px 0;
+}
+
+form input, form button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: 80%;
+    max-width: 300px;
+}
+
+form button {
+    background-color: #4caf50; /* Green button */
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #388e3c; /* Darker green on hover */
+}
+
+footer {
+    background-color: #4caf50; /* Green footer */
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+.placebid {
+    background-color: #4caf50; /* Green button */
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.placebid:hover {
+    background-color: #388e3c; /* Darker green on hover */
+    border-radius: 5px; /* Rounded corners on hover */
+}
