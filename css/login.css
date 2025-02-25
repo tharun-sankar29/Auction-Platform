@@ -34,6 +34,7 @@ body {
     border: none;
     border-radius: 4px; /* Rounded corners */
     cursor: pointer;
+    margin: 10px 0;
 }
 
 .login-container button:hover {
@@ -74,3 +75,15 @@ nav ul li a:hover {
     border-radius: 5px; /* Rounded corners on hover */
 }
 
+p {
+    font-size: small;
+}
+
+footer {
+    text-align: center; /* Center the text */
+    padding: 10px 0; /* Add some padding */
+    background-color: #f0f0f0; /* Match the body background */
+    position: relative; /* Position relative for better placement */
+    bottom: 0; /* Stick to the bottom */
+    width: 100%; /* Full width */
+}
