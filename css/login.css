@@ -75,6 +75,10 @@ nav ul li a:hover {
     border-radius: 5px; /* Rounded corners on hover */
 }
 
+nav ul li a:active {
+    background-color: green; /* Changes color when clicked */
+}
+
 p {
     font-size: small;
 }

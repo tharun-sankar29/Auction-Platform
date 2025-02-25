@@ -1,0 +1,105 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e8f5e9; /* Light green background */
+}
+
+main {
+    padding: 20px;
+}
+
+
+.auction-container {
+    
+    display: flex; /* Use flexbox layout */
+    justify-content: flex-start; /* Center items horizontally */ 
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px;
+}
+
+.auction-item {
+    text-align: center;
+    width: 20%;
+    min-width: 250px; /* Prevents items from shrinking too much */
+    height: 300px;
+    background-color: #ffffff;
+    border: 1px solid #c8e6c9;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.auction-item:hover {
+    cursor: pointer;
+
+}
+
+.auction-item img {
+    max-width: 100%;
+    height: auto;
+}
+
+nav {
+    display: flex; /* Use flexbox layout */
+    justify-content: center; /* Center items horizontally */
+    background-color: #4caf50; /* Green background for navigation */
+    padding: 25px ; /* Padding for top and bottom */
+    width: 100%;
+    margin-bottom: 40px;
+    
+}
+
+nav ul {
+    display: flex; /* Make the list a flex container */
+    list-style: none; /* Remove default list styling */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+}
+
+nav ul li {
+    margin: 0 35px; /* Space between navigation items */
+}
+
+nav ul li a {
+    color: white; /* Text color */
+    text-decoration: none; /* Remove underline */
+    padding: 10px 15px; /* Padding around links */
+    transition: background-color 0.3s; /* Smooth background change on hover */
+}
+
+nav ul li a:hover {
+    background-color: #388e3c; /* Darker green on hover */
+    border-radius: 5px; /* Rounded corners on hover */
+}
+
+nav ul li a:active {
+    background-color: green; /* Changes color when clicked */
+}
+
+footer {
+    text-align: center; /* Center the text */
+    padding: 10px 0; /* Add some padding */
+    background-color: #f0f0f0; /* Match the body background */
+    position: relative; /* Position relative for better placement */
+    bottom: 0; /* Stick to the bottom */
+    width: 100%; /* Full width */
+}
+
+.placebid {
+    background-color: #4caf50; /* Green button */
+    color: white;
+    border: #388e3c solid 1px;
+    width: 30%;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 45px;
+    margin-top: 25px;
+}
+
+.placebid:hover {
+    background-color: #388e3c; /* Darker green on hover */
+    border-radius: 45px; /* Rounded corners on hover */
+}
