@@ -33,6 +33,10 @@ window.renderAuctions  = function(auction_type) {
             <p>Time Left: ${auction.timeLeft}</p>
             <button class="placebid" onclick="placeBid(${auction.id})">Place Bid</button>
         `;
+
+        auctionElement.addEventListener('click', () => {
+            window.location.href = `item-details.html?auction_id=${auction.id}`;
+        });
         container.appendChild(auctionElement);
     });
 }
