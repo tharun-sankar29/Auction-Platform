@@ -20,7 +20,7 @@
     
     <div class="login-container">
         <h2>Login</h2>
-        <form>
+        <form class="auction-login">
             <div>
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
@@ -37,4 +37,17 @@
         <p>&copy; 2025 Auction Platform. All rights reserved.</p>
     </footer>
 </body>
+<script>
+    document.querySelector('.auction-login').addEventListener('submit', function(event) {
+      // Prevent the form's default submission behavior
+      event.preventDefault();
+      
+      // Check the form validity
+      if (this.checkValidity()) {
+        // Redirect to another webpage (change 'welcome.html' to your target page)
+        window.location.href = "index.html";
+      }
+      // If the form is not valid, the browser's built-in validation will display errors.
+    });
+  </script>
 </html>

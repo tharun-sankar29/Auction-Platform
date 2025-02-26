@@ -26,6 +26,17 @@ body {
     border-radius: 4px; /* Rounded corners */
 }
 
+.login-container select {
+    width: 95%;           /* Same width as input fields */
+    padding: 10px;        /* Same padding */
+    margin: 10px 0;       /* Consistent margin */
+    border: 1px solid #ccc; /* Same border as inputs */
+    border-radius: 4px;   /* Rounded corners matching inputs */
+    font-size: 1rem;      /* Consistent font size */
+    background-color: #fff; /* White background */
+    color: #333;          /* Consistent text color */
+}
+
 .login-container button {
     width: 100%; /* Full width button */
     padding: 10px;

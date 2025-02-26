@@ -1,49 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="css/login.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="auction-listings.html">Auctions</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="help.html">Help</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <div class="login-container">
-        <h2>Register</h2>
-        <form>
-            <div>
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <div>
-                <label for="confirm-password">Confirm Password:</label>
-                <input type="password" id="confirm-password" name="confirm-password" required>
-            </div>
-            <button type="submit">Register</button>
-            <p>Already have an account? <a href="login.html">Login</a></p>
-        </form>
-    </div>
-    
-    <footer>
-        <p>&copy; 2025 Auction Platform. All rights reserved.</p>
-    </footer>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="auction-listings.html">Auctions</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="help.html">Help</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <div class="login-container">
+    <h2>Register</h2>
+    <form class="first-register">
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <div>
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" id="confirm-password" name="confirm-password" required>
+      </div>
+      <div>
+        <label for="type">Select your category:</label>
+        <select id="type" name="type">
+          <option>Seller</option>
+          <option>Customer</option>
+        </select> 
+      </div>
+      <button type="submit">Register</button>
+      <p>Already have an account? <a href="login.html">Login</a></p>
+    </form>
+  </div>
+  
+  <footer>
+    <p>&copy; 2025 Auction Platform. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.querySelector('.first-register').addEventListener('submit', function(event) {
+      // Prevent the form's default submission behavior
+      event.preventDefault();
+      
+      // Check the form validity
+      if (this.checkValidity()) {
+        // Optionally show an alert for successful registration
+        alert("Registration successful!");
+        // Redirect to another webpage (change 'welcome.html' to your target page)
+        window.location.href = "index.html";
+      }
+      // If the form is not valid, the browser's built-in validation will display errors.
+    });
+  </script>
 </body>
 </html>
