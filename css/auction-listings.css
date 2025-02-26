@@ -45,7 +45,7 @@
     text-align: center;
     width: 30%;
     min-width: 250px; /* Prevents items from shrinking too much */
-    height: 250px;
+    min-height: 250px;
     background-color: #ffffff;
     border: 1px solid #c8e6c9;
     border-radius: 5px;

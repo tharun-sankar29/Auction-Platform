@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
             auctionElement.classList.add("auction-item");
             auctionElement.innerHTML = `
                 <h3>${auction.title}</h3>
+                <img src="images/auction-items/${auction.id}.jpg">
                 <p>Current Bid: ${auction.price}</p>
                 <p>Time Left: ${auction.timeLeft}</p>
                 <button class = "placebid" onclick="placeBid(${auction.id})">Place Bid</button>
@@ -26,10 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Placeholder function for bidding
-    window.placeBid = function(auctionId) {
-        alert(`Bid placed on auction ID: ${auctionId}`);
-    }
 
     renderAuctions();
 });
