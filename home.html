@@ -34,6 +34,11 @@
     <footer>
         <p>&copy; 2025 Auction Platform. All rights reserved.</p>
     </footer>
-    <script src="js/script.js"></script>
+    <script src="js/newscript.js" defer></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            renderAuctions('featured');
+        });
+    </script>
 </body>
 </html>

@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { id: 5, title: "Mobile Phone", price: "$400", timeLeft: "5hr 35m"}
     ];
 
-    // Render auctions dynamically
+    //Render auctions dynamically
     function renderAuctions() {
         auctionContainer.innerHTML = "";
         auctions.forEach(auction => {
@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-
-    renderAuctions();
+    
+    
+    //Call the function with the respective datasets
 });
