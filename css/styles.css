@@ -54,12 +54,3 @@ footer {
     padding: 10px;
     text-align: center;
 }
-
-button {
-    cursor: pointer;
-    transition: transform 0.5s ease;
-}
-
-button:hover {
-    transform: translateY(-10px) scale(1.05);
-}
