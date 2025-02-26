@@ -37,7 +37,21 @@
         <p>&copy; 2025 Auction Platform. All rights reserved.</p>
     </footer>
 </body>
-
+<script>
+    document.querySelector('.auction-login').addEventListener('submit', function(event) {
+      // Prevent the form's default submission behavior
+      event.preventDefault();
+      
+      // Check the form validity
+      if (this.checkValidity()) {
+        // Optionally show an alert for successful registration
+        alert("Login successful!");
+        // Redirect to another webpage (change 'welcome.html' to your target page)
+        window.location.href = "home.html";
+      }
+      // If the form is not valid, the browser's built-in validation will display errors.
+    });
+  </script>
 <script src="js/form-validation.js"></script>
 
 </html>
