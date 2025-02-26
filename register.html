@@ -53,20 +53,5 @@
     <p>&copy; 2025 Auction Platform. All rights reserved.</p>
   </footer>
 
-  <script>
-    document.querySelector('.first-register').addEventListener('submit', function(event) {
-      // Prevent the form's default submission behavior
-      event.preventDefault();
-      
-      // Check the form validity
-      if (this.checkValidity()) {
-        // Optionally show an alert for successful registration
-        alert("Registration successful!");
-        // Redirect to another webpage (change 'welcome.html' to your target page)
-        window.location.href = "home.html";
-      }
-      // If the form is not valid, the browser's built-in validation will display errors.
-    });
-  </script>
 </body>
 </html>
