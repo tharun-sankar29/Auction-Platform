@@ -1,10 +1,10 @@
 .search-container{
     display: flex;
-    max-width: 60%;
+    max-width: 80%;
 }
 
 .search-container input{
-    width: 80%;
+    width: 60%;
     height: 30px;
     background-color: #d6f8d7;
     border-radius: 5px;
@@ -18,6 +18,16 @@
     height: 30px;
     cursor: pointer;
     transition: transform 0.3s ease;
+}
+
+.filter-dropdown{
+    height: 30px;
+    width: auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    margin-right: 10px;
+    border-radius: 5px;
+    background-color: #d6f8d7;
 }
 
 .search-container img:hover{
