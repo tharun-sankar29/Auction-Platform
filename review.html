@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Feedback & Reviews</title>
-  <link rel="stylesheet" href="css\review.css" />
+  <link rel="stylesheet" href="css/review.css" />
 </head>
 <body>
   <header class="header">
@@ -39,6 +39,27 @@
         <button type="submit">Submit Review</button>
       </form>
     </section>
+  </main>
 
-    <!-- Reviews List -->
-    
+  <footer class="footer">
+    <p>&copy; 2025 Online Auction. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    document.querySelector('.review-form').addEventListener('submit', function(event) {
+      // Prevent the form from submitting so we can show the alert first.
+      // If the form is invalid, the browser's built-in validation will kick in.
+      if (!this.checkValidity()) {
+        // Let the browser show validation messages.
+        return;
+      }
+      
+      // If the form is valid, show the alert.
+      alert("Thank you for your review, it has been submitted.");
+      
+      // Optionally, you can then allow the form submission or handle it via AJAX.
+      // event.preventDefault(); // Uncomment this if you do not want the form to actually submit.
+    });
+  </script>
+</body>
+</html>

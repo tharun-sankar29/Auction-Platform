@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Customer Support - Online Auction</title>
+  <link rel="stylesheet" href="css\help.css" />
+</head>
+<body>
+  <header class="header">
+    <h1>Customer Support</h1>
+    <nav class="navbar">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="support-container">
+    <!-- FAQ Section -->
+    <section class="faq">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>How do I place a bid?</h3>
+        <p>To place a bid, navigate to the auction details page, enter your bid amount, and click the "Place Bid" button. Your bid will be processed in real-time.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How do I register as a seller?</h3>
+        <p>Simply visit our registration page, select the seller option, and fill out the required details. An approval process will follow to ensure your account meets our seller criteria.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What payment methods are accepted?</h3>
+        <p>We support various payment methods including credit cards, PayPal, and bank transfers. Please refer to our payment policy for detailed information.</p>
+      </div>
+    </section>
+
+    <!-- Contact Support Section -->
+    <section class="contact-support">
+      <h2>Contact Customer Support</h2>
+      <p>If you have further questions or need assistance, please fill out the form below. Our support team will get back to you within 24 hours.</p>
+      <form class="support-form"> 
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Your Name" required />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Your Email" required />
+
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject" placeholder="Subject" required />
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
+
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Online Auction. All Rights Reserved.</p>
+  </footer>
+</body>
+
+<script>
+    document.querySelector('.support-form').addEventListener('submit', function(event) {
+      // Prevent the form from submitting so we can show the alert first.
+      // If the form is invalid, the browser's built-in validation will kick in.
+      if (!this.checkValidity()) {
+        // Let the browser show validation messages.
+        return;
+      }
+      
+      // If the form is valid, show the alert.
+      alert("Your query has been submitted! we will get in contact with you within 24 hours");
+      
+      // Optionally, you can then allow the form submission or handle it via AJAX.
+      // event.preventDefault(); // Uncomment this if you do not want the form to actually submit.
+    });
+  </script>
+</html>

@@ -15,7 +15,7 @@
   
   /* Header */
   .header {
-    background-color: #333;
+    background-color: #4caf50;
     color: #fff;
     padding: 1rem 2rem;
     text-align: center;
@@ -34,7 +34,7 @@
     padding: 2rem;
     margin-bottom: 2rem;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px #4caf50;
   }
   
   .review-form-section h2 {
@@ -84,7 +84,7 @@
   }
   
   .review-form button {
-    background: #333;
+    background: #4caf50;
     color: #fff;
     padding: 0.75rem 1.5rem;
     border: none;
@@ -148,7 +148,7 @@
   .footer {
     text-align: center;
     padding: 1rem 0;
-    background: #333;
+    background: #4caf50;
     color: #fff;
     margin-top: 2rem;
   }
