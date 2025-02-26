@@ -108,15 +108,18 @@ footer {
 .placebid {
     background-color: #4caf50; /* Green button */
     color: white;
+    font-size: medium;
     border: #388e3c solid 1px;
     width: 30%;
     height: 50px;
     cursor: pointer;
     border-radius: 45px;
-    margin-top: 25px;
+    margin-top: 45px;
+    transition: transform 0.5s ease;
 }
 
 .placebid:hover {
+    transform: scale(1.05) translateY(-10px);
     background-color: #388e3c; /* Darker green on hover */
     border-radius: 45px; /* Rounded corners on hover */
 }
