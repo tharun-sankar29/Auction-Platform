@@ -17,7 +17,7 @@
   }
   
   .support-container {
-    line-height: 1.6;
+    
     max-width: 960px;
     margin: 2rem auto;
     padding: 0 1rem;
@@ -25,6 +25,7 @@
   
   /* FAQ Section */
   .faq {
+    line-height: 1.6;
     background: #fff;
     padding: 2rem;
     margin-bottom: 2rem;
@@ -53,6 +54,7 @@
   
   /* Contact Support Section */
   .contact-support {
+    line-height: 1.6;
     background: #fff;
     padding: 2rem;
     border-radius: 5px;
@@ -100,5 +102,3 @@
     background-color: #388e3c;
     transform: scale(1.05) translateY(-10px);
   }
-  
-  

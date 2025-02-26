@@ -1,8 +1,11 @@
 body {
+    display: flex;
+    flex-direction: column;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #e8f5e9; /* Light green background */
+    min-height: 100vh;
 }
 
 
@@ -17,6 +20,7 @@ nav {
 }
 
 main {
+    flex: 1;
     margin-left: 30px;
     margin-right: 30px;
 }
