@@ -25,7 +25,7 @@ header {
     border-radius: 10px;
     padding: 0; /* Remove padding */
     margin: 10px;
-    width: 30%;
+    width: 20%;
     height: 400px;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
