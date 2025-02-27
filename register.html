@@ -101,15 +101,15 @@
       return isValid;
   }
   
-  document.addEventListener("DOMContentLoaded", function() {
-      document.querySelector('.first-register').addEventListener('submit', function(event) {
-          if (!validateRegistration()) {
-              event.preventDefault();
-          } else {
-              alert("Registration successful!");
-              window.location.href = "home.html";
-          }
-      });
+  document.querySelector('.first-register').addEventListener('submit', function(event) {
+    event.preventDefault(); // Stop normal submission every time
+    
+    if (!validateRegistration()) {
+      // Show validation errors (already handled in your code)
+    } else {
+      alert("Registration successful!");
+      window.location.href = "home.html";
+    }
   });
 </script>
   
