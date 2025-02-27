@@ -48,11 +48,10 @@
     background-color: #388e3c; /* Darker green on hover */
 }
 
-#error-message-username, #error-message-password, #name-error, #email-error, 
-#password-error, #confirm-password-error {
+
+.error-message {
     color: red;
     font-size: smaller;
-     
 }
 
 
