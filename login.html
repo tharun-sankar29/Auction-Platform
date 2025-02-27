@@ -26,10 +26,12 @@
                 <div>
                     <label for="username">Username:</label>
                     <input type="text" id="username" name="username" required>
+                    <div id="error-message" style="color: red; display: none;"></div>
                 </div>
                 <div>
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="password" required>
+                    <div id="error-message" style="color: red; display: none;"></div>
                 </div>
                 <button type="submit">Login</button>
                 <p class="register-redirect">Don't have an account? <a href="register.html">Register</a></p>
@@ -42,20 +44,42 @@
     </footer>
 </body>
 <script>
-    document.querySelector('.auction-login').addEventListener('submit', function(event) {
-      // Prevent the form's default submission behavior
-      event.preventDefault();
-      
-      // Check the form validity
-      if (this.checkValidity()) {
-        // Optionally show an alert for successful registration
-        alert("Login successful!");
-        // Redirect to another webpage (change 'welcome.html' to your target page)
-        window.location.href = "home.html";
-      }
-      // If the form is not valid, the browser's built-in validation will display errors.
+    function validateCredentials() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const errorMessage = document.getElementById('error-message');
+
+        errorMessage.style.display = 'none';
+        errorMessage.textContent = '';
+
+
+        const usernameRegex = /^[a-zA-Z0-9-_]+$/;
+        if (!usernameRegex.test(username)) {
+            errorMessage.textContent = 'Username can only contain letters, numbers, hyphens (-), and underscores (_).';
+            errorMessage.style.display = 'block';
+            return false;
+        }
+
+        if (password.length < 6) {
+            errorMessage.textContent = 'Password must be at least 6 characters long.';
+            errorMessage.style.display = 'block';
+            return false;
+        }
+
+        return true;
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelector('.auction-login').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            if (validateCredentials()) {
+                alert("Login successful!");
+                window.location.href = "home.html";
+            }
+        });
     });
-  </script>
-<script src="js/form-validation.js"></script>
+</script>
+
 
 </html>
