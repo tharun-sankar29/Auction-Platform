@@ -103,9 +103,8 @@
   
   document.addEventListener("DOMContentLoaded", function() {
       document.querySelector('.first-register').addEventListener('submit', function(event) {
-          if (!validateRegistration()) {
-              event.preventDefault();
-          } else {
+        event.preventDefault();
+          if (validateRegistration()) {
               alert("Registration successful!");
               window.location.href = "home.html";
           }
