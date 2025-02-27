@@ -101,6 +101,16 @@
       return isValid;
   }
   
+<<<<<<< HEAD
+  document.querySelector('.first-register').addEventListener('submit', function(event) {
+    event.preventDefault(); 
+    
+    if (!validateRegistration()) {
+    } else {
+      alert("Registration successful!");
+      window.location.href = "home.html";
+    }
+=======
   document.addEventListener("DOMContentLoaded", function() {
       document.querySelector('.first-register').addEventListener('submit', function(event) {
         event.preventDefault();
@@ -109,6 +119,7 @@
               window.location.href = "home.html";
           }
       });
+>>>>>>> b8b62409143424ebce92c8f9277cb3983195d24e
   });
 </script>
   
