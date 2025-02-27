@@ -4,16 +4,16 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #e8f5e9; /* Light green background */
+    background-color: #e8f5e9;
     min-height: 100vh;
 }
 
 
 nav {
-    display: flex; /* Use flexbox layout */
-    justify-content: center; /* Center items horizontally */
-    background-color: #4caf50; /* Green background for navigation */
-    padding: 25px 0 ; /* Padding for top and bottom */
+    display: flex; 
+    justify-content: center;
+    background-color: #4caf50; 
+    padding: 25px 0 ; 
     width: 100%;
     margin-bottom: 40px;
     
@@ -26,34 +26,34 @@ main {
 }
 
 nav ul {
-    display: flex; /* Make the list a flex container */
-    list-style: none; /* Remove default list styling */
-    padding: 0; /* Remove default padding */
-    margin: 0; /* Remove default margin */
+    display: flex; 
+    list-style: none; 
+    padding: 0; 
+    margin: 0; 
 }
 
 nav ul li {
-    margin: 0 35px; /* Space between navigation items */
+    margin: 0 35px; 
 }
 
 nav ul li a {
-    color: white; /* Text color */
-    text-decoration: none; /* Remove underline */
-    padding: 10px 15px; /* Padding around links */
-    transition: background-color 0.3s; /* Smooth background change on hover */
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px; 
+    transition: background-color 0.3s;
 }
 
 nav ul li a:hover {
-    background-color: #388e3c; /* Darker green on hover */
-    border-radius: 5px; /* Rounded corners on hover */
+    background-color: #388e3c; 
+    border-radius: 5px;
 }
 
 nav ul li a:active {
-    background-color: green; /* Changes color when clicked */
+    background-color: green; 
 }
 
 footer {
-    background-color: #4caf50; /* Green footer */
+    background-color: #4caf50; 
     color: white;
     padding: 10px;
     text-align: center;
