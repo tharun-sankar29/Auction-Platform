@@ -26,12 +26,13 @@
                 <div>
                     <label for="username">Username:</label>
                     <input type="text" id="username" name="username" required>
-                    <div id="error-message" style="color: red; display: none;"></div>
+                    <div id="error-message-username" style="color: red; display: none;"></div>
                 </div>
                 <div>
+                    
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="password" required>
-                    <div id="error-message" style="color: red; display: none;"></div>
+                    <div id="error-message-password" style="color: red; display: none;"></div>
                 </div>
                 <button type="submit">Login</button>
                 <p class="register-redirect">Don't have an account? <a href="register.html">Register</a></p>
@@ -47,22 +48,26 @@
     function validateCredentials() {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
-        const errorMessage = document.getElementById('error-message');
+        const errorMessageUsername = document.getElementById('error-message-username');
+        const errorMessagePassword = document.getElementById('error-message-password');
 
-        errorMessage.style.display = 'none';
-        errorMessage.textContent = '';
+        errorMessageUsername.style.display = 'none';
+        errorMessageUsername.textContent = '';
+
+        errorMessagePassword.style.display = 'none';
+        errorMessagePassword.textContent = '';
 
 
         const usernameRegex = /^[a-zA-Z0-9-_]+$/;
         if (!usernameRegex.test(username)) {
-            errorMessage.textContent = 'Username can only contain letters, numbers, hyphens (-), and underscores (_).';
-            errorMessage.style.display = 'block';
+            errorMessageUsername.textContent = 'Username can only contain letters, numbers, hyphens (-), and underscores (_).';
+            errorMessageUsername.style.display = 'block';
             return false;
         }
 
         if (password.length < 6) {
-            errorMessage.textContent = 'Password must be at least 6 characters long.';
-            errorMessage.style.display = 'block';
+            errorMessagePassword.textContent = 'Password must be at least 6 characters long.';
+            errorMessagePassword.style.display = 'block';
             return false;
         }
 

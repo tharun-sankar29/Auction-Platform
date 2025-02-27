@@ -24,18 +24,22 @@
       <div>
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required>
+        <div id="name-error" style="color: red; display: none;"></div>
       </div>
       <div>
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
+        <div id="email-error" style="color: red; display: none;"></div>
       </div>
       <div>
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
+        <div id="password-error" style="color: red; display: none;"></div>
       </div>
       <div>
         <label for="confirm-password">Confirm Password:</label>
         <input type="password" id="confirm-password" name="confirm-password" required>
+        <div id="confirm-password-error" style="color: red; display: none;"></div>
       </div>
       <div>
         <label for="type">Select your category:</label>
@@ -55,18 +59,58 @@
 
 </body>
 <script>
-  document.querySelector('.first-register').addEventListener('submit', function(event) {
-    // Prevent the form's default submission behavior
-    event.preventDefault();
-    
-    // Check the form validity
-    if (this.checkValidity()) {
-      // Optionally show an alert for successful registration
-      alert("Registration successful!");
-      // Redirect to another webpage (change 'welcome.html' to your target page)
-      window.location.href = "home.html";
-    }
-    // If the form is not valid, the browser's built-in validation will display errors.
+  function validateRegistration() {
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+  
+      document.getElementById('name-error').style.display = 'none';
+      document.getElementById('email-error').style.display = 'none';
+      document.getElementById('password-error').style.display = 'none';
+      document.getElementById('confirm-password-error').style.display = 'none';
+  
+      let isValid = true;
+  
+      const nameRegex = /^[A-Za-z\s]+$/;
+      if (name && !nameRegex.test(name)) {
+          document.getElementById('name-error').textContent = 'Name can only contain letters and spaces.';
+          document.getElementById('name-error').style.display = 'block';
+          isValid = false;
+      }
+  
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (email && !emailRegex.test(email)) {
+          document.getElementById('email-error').textContent = 'Enter a valid email address.';
+          document.getElementById('email-error').style.display = 'block';
+          isValid = false;
+      }
+  
+      if (password && password.length < 6) {
+          document.getElementById('password-error').textContent = 'Password must be at least 6 characters long.';
+          document.getElementById('password-error').style.display = 'block';
+          isValid = false;
+      }
+  
+      if (password && confirmPassword && password !== confirmPassword) {
+          document.getElementById('confirm-password-error').textContent = 'Passwords do not match.';
+          document.getElementById('confirm-password-error').style.display = 'block';
+          isValid = false;
+      }
+  
+      return isValid;
+  }
+  
+  document.addEventListener("DOMContentLoaded", function() {
+      document.querySelector('.first-register').addEventListener('submit', function(event) {
+          if (!validateRegistration()) {
+              event.preventDefault();
+          } else {
+              alert("Registration successful!");
+              window.location.href = "home.html";
+          }
+      });
   });
 </script>
+  
 </html>
