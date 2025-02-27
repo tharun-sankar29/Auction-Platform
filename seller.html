@@ -125,9 +125,8 @@
     }
 
     document.getElementById('productForm').addEventListener('submit', function(event) {
-        if (!validateProduct()) {
-            event.preventDefault();
-        } else {
+        event.preventDefault();
+        if (validateProduct()) {
             alert("Product added successfully!");
             window.location.href = "home.html";
         }
