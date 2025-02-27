@@ -49,4 +49,5 @@
 .error-message {
     color: red;
     font-size: smaller;
+    display: none;
 }
