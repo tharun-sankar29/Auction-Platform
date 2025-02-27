@@ -37,8 +37,8 @@
 
 .auction-container {
     text-align: center;
-    display: flex; /* Use flexbox layout */
-    justify-content: flex-start; /* Center items horizontally */ 
+    display: flex;
+    justify-content: flex-start;
     flex-wrap: wrap;
     gap: 10px;
     margin-left: 30px;
@@ -47,7 +47,7 @@
 
 .auction-item {
     width: 29%;
-    min-width: 200px; /* Prevents items from shrinking too much */
+    min-width: 200px;
     max-height: 500px;
     background-color: #ffffff;
     border: 1px solid #c8e6c9;
@@ -90,7 +90,7 @@
 }
 
 .placebid {
-    background-color: #4caf50; /* Green button */
+    background-color: #4caf50;
     color: white;
     font-size: medium;
     border: #388e3c solid 1px;
@@ -104,7 +104,7 @@
 
 .placebid:hover {
     transform: scale(1.05) translateY(-10px);
-    background-color: #388e3c; /* Darker green on hover */
-    border-radius: 45px; /* Rounded corners on hover */
+    background-color: #388e3c;
+    border-radius: 45px;
 }
 

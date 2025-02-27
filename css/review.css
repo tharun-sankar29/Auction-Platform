@@ -1,11 +1,11 @@
-/* Reset default styling */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
   
-  /* Overall body styling */
+
   body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -13,7 +13,7 @@
     line-height: 1.6;
   }
   
-  /* Header */
+
   .header {
     background-color: #4caf50;
     color: #fff;
@@ -21,14 +21,14 @@
     text-align: center;
   }
   
-  /* Container */
+
   .container {
     max-width: 960px;
     margin: 2rem auto;
     padding: 0 1rem;
   }
   
-  /* Review Form Section */
+
   .review-form-section {
     background: #fff;
     padding: 2rem;
@@ -58,7 +58,7 @@
     font-size: 1rem;
   }
   
-  /* Star Rating Styling */
+
   .review-form .rating {
     display: flex;
     flex-direction: row-reverse;
@@ -97,7 +97,7 @@
     background: #555;
   }
   
-  /* Reviews Section */
+
   .reviews-section {
     background: #fff;
     padding: 2rem;
@@ -144,7 +144,7 @@
     color: #777;
   }
   
-  /* Footer */
+
   .footer {
     text-align: center;
     padding: 1rem 0;

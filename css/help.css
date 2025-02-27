@@ -1,4 +1,4 @@
-/* Reset and base styles */
+
 * {
     margin: 0;
     padding: 0;
@@ -17,13 +17,12 @@
   }
   
   .support-container {
-    
     max-width: 960px;
     margin: 2rem auto;
     padding: 0 1rem;
   }
   
-  /* FAQ Section */
+
   .faq {
     line-height: 1.6;
     background: #fff;
@@ -52,7 +51,7 @@
     font-size: 0.95rem;
   }
   
-  /* Contact Support Section */
+
   .contact-support {
     line-height: 1.6;
     background: #fff;

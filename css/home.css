@@ -1,6 +1,6 @@
 
 header {
-    background-color: #4caf50; /* Green header */
+    background-color: #4caf50;
     color: white;
     padding: 10px;
     text-align: center;
@@ -17,7 +17,7 @@ header {
     text-decoration: none;
     border: 1px solid #4caf50;
     border-radius: 10px;
-    padding: 0; /* Remove padding */
+    padding: 0; 
     margin: 10px;
     width: 20%;
     height: 400px;
