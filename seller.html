@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Add New Product</title>
   <link rel="stylesheet" href="css/styles.css">
-<<<<<<< HEAD
   <style>
     .product-form-container {
       width: 100%;
@@ -54,10 +53,6 @@
       background-color: #388e3c;
     }
   </style>
-=======
-  <link rel="stylesheet" href="css/seller.css">
-  
->>>>>>> 5b4712215cd2790863d0118dfcc0391cf2760b1b
 </head>
 <body>
   <header>
@@ -124,65 +119,83 @@
   </footer>
   
   <script>
-    function validateProduct() {
-      
-        const productId = document.getElementById('product-id').value.trim();
-        const category = document.getElementById('category').value;
-        const name = document.getElementById('name').value.trim();
-        const price = document.getElementById('price').value.trim();
-        const description = document.getElementById('description').value.trim();
-        const startTime = document.getElementById('start-time').value;
-        const endTime = document.getElementById('end-time').value;
-
-        function showErrorMessage(id, message) {
-          const errorElement = document.getElementById(id);
-          errorElement.textContent = message;
-          errorElement.style.display = 'block';
-        }
-    
-        const productIdRegex = /^[A-Za-z0-9-_]+$/;
-        if (!productIdRegex.test(productId)) {
-            showErrorMessage('product-id-error', 'Product ID can only contain letters, numbers, hyphens, and underscores.');
-            return false;
-        }
-    
-        if (!category) {
-            showErrorMessage('category-error', 'Please select a category.');
-            return false;
-        }
-    
-        const nameRegex = /^[A-Za-z0-9\s\-]+$/;
-        if (!nameRegex.test(name)) {
-            showErrorMessage('name-error', 'Product title can only contain letters, numbers, spaces, and hyphens.');
-            return false;
-        }
-    
-        if (price <= 0 || isNaN(price)) {
-            showErrorMessage('price-error', 'Price must be a positive number.');
-            return false;
-        }
-    
-        if (description.length < 10) {
-            showErrorMessage('description-error', 'Description must be at least 10 characters long.');
-            return false;
-        }
-    
-        if (new Date(startTime) >= new Date(endTime)) {
-            showErrorMessage('end-time-error', 'End time must be later than start time.');
-            return false;
-        }
-    
-        return true;
+    function getLocalDateTimePlusMinutes(minutesOffset) {
+      const now = new Date();
+      now.setMinutes(now.getMinutes() + minutesOffset);
+      const localTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+      return localTime.toISOString().slice(0, 16);
     }
 
-    document.getElementById('productForm').addEventListener('submit', function(event) {
+    function validateProduct() {
+      const productId = document.getElementById('product-id').value.trim();
+      const category = document.getElementById('category').value;
+      const name = document.getElementById('name').value.trim();
+      const price = document.getElementById('price').value.trim();
+      const description = document.getElementById('description').value.trim();
+      const startTime = document.getElementById('start-time').value;
+      const endTime = document.getElementById('end-time').value;
+
+      function showErrorMessage(id, message) {
+        const errorElement = document.getElementById(id);
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+      }
+  
+      const productIdRegex = /^[A-Za-z0-9-_]+$/;
+      if (!productIdRegex.test(productId)) {
+          showErrorMessage('product-id-error', 'Product ID can only contain letters, numbers, hyphens, and underscores.');
+          return false;
+      }
+  
+      if (!category) {
+          showErrorMessage('category-error', 'Please select a category.');
+          return false;
+      }
+  
+      const nameRegex = /^[A-Za-z0-9\s\-]+$/;
+      if (!nameRegex.test(name)) {
+          showErrorMessage('name-error', 'Product title can only contain letters, numbers, spaces, and hyphens.');
+          return false;
+      }
+  
+      if (price <= 0 || isNaN(price)) {
+          showErrorMessage('price-error', 'Price must be a positive number.');
+          return false;
+      }
+  
+      if (description.length < 10) {
+          showErrorMessage('description-error', 'Description must be at least 10 characters long.');
+          return false;
+      }
+  
+      if (new Date(startTime) >= new Date(endTime)) {
+          showErrorMessage('end-time-error', 'End time must be later than start time.');
+          return false;
+      }
+  
+      return true;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const startTimeInput = document.getElementById('start-time');
+      const endTimeInput = document.getElementById('end-time');
+      const productForm = document.getElementById('productForm');
+
+      startTimeInput.min = getLocalDateTimePlusMinutes(5);
+      startTimeInput.addEventListener('change', () => {
+        if (startTimeInput.value) {
+          endTimeInput.min = startTimeInput.value;
+        }
+      });
+
+      productForm.addEventListener('submit', (event) => {
         event.preventDefault();
         if (validateProduct()) {
-            alert("Product added successfully!");
-            window.location.href = "home.html";
+          alert("Product added successfully!");
+          window.location.href = "home.html";
         }
+      });
     });
-
-    </script>
+  </script>
 </body>
 </html>
