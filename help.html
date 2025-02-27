@@ -67,18 +67,12 @@
 
 <script>
     document.querySelector('.support-form').addEventListener('submit', function(event) {
-      // Prevent the form from submitting so we can show the alert first.
-      // If the form is invalid, the browser's built-in validation will kick in.
       if (!this.checkValidity()) {
-        // Let the browser show validation messages.
         return;
       }
-      
-      // If the form is valid, show the alert.
+
       alert("Your query has been submitted! we will get in contact with you within 24 hours");
-      
-      // Optionally, you can then allow the form submission or handle it via AJAX.
-      // event.preventDefault(); // Uncomment this if you do not want the form to actually submit.
+
     });
   </script>
 </html>
