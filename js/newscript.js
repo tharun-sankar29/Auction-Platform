@@ -1,6 +1,6 @@
 window.renderAuctions  = function(auction_type) {
     const container = document.getElementById("auction-container");
-    container.innerHTML = ''; // Clear previous content
+    container.innerHTML = '';
 
     let auctions;
     const allauctions = [
