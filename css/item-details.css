@@ -1,10 +1,7 @@
-/* item-details.css */
-
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
-    padding: 20px;
 }
 
 #product-container {
@@ -45,4 +42,14 @@ button.placebid {
 
 button.placebid:hover {
     background-color: #218838;
+}
+
+button.add-review {
+    background-color: #f0c14b;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
 }

@@ -18,7 +18,9 @@ window.renderProductPage = function(auction_id) {
         <img src="images/auction-items/${auction.id}.jpg">
         <p>Current Bid: ${auction.price}</p>
         <p>Time Left: ${auction.timeLeft}</p>
+        <button class = "add-review" onclick="window.location.href='review.html?auction_id=${auction.id}'">Add Review</button>
         <button class = "placebid" onclick="placeBid(${auction.id})">Place Bid</button>
     `;
     productContainer.appendChild(productContainer);
 }
+

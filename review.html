@@ -47,11 +47,12 @@
 
   <script>
     document.querySelector('.review-form').addEventListener('submit', function(event) {
-      if (!this.checkValidity()) {
-        return;
-      }
-
+      event.preventDefault();
+      urlparams = new URLSearchParams(window.location.search);
+      auctionId = urlparams.get('auction_id');
+      console.log(auctionId);
       alert("Thank you for your review, it has been submitted.");
+      window.location.href = "item-details.html?auction_id=" + auctionId;
  
     });
   </script>
