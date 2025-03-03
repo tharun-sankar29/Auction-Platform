@@ -19,8 +19,27 @@ window.renderProductPage = function(auction_id) {
         <p>Current Bid: ${auction.price}</p>
         <p>Time Left: ${auction.timeLeft}</p>
         <button class = "add-review" onclick="window.location.href='review.html?auction_id=${auction.id}'">Add Review</button>
-        <button class = "placebid" onclick="placeBid(${auction.id})">Place Bid</button>
+        <button id="placeBidButton" class = "placebid">Place Bid</button>
+        <div id="bidModal" style="display:none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Place Bid</h2>
+                <input id="bidAmount" type="number" placeholder="Enter bid amount">
+                <button id="submitBid">Submit Bid</button>
+            </div>
+        </div>
     `;
-    productContainer.appendChild(productContainer);
-}
+    document.getElementById('placeBidButton').onclick = function() {
+        document.getElementById('bidModal').style.display = 'block';
+    };
 
+    document.querySelector('.close').onclick = function() {
+        document.getElementById('bidModal').style.display = 'none';
+    };
+
+    document.getElementById('submitBid').onclick = function() {
+        const bidAmount = document.getElementById('bidAmount').value;
+        alert(`Bid of ${bidAmount} submitted!`);
+        document.getElementById('bidModal').style.display = 'none';
+    };
+}
