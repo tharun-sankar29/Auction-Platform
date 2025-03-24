@@ -1,3 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', 'Roboto', sans-serif;
+}
+
 
 header {
     background-color: #4caf50;
@@ -5,6 +15,8 @@ header {
     padding: 10px;
     text-align: center;
 }
+
+
 
 .menu-container {
     display: flex;
@@ -38,7 +50,7 @@ header {
     background-color: #4caf50;
     color: white;
     text-align: center;
-    padding-right: 20px;
+    padding-right: 0 15px 15px 0;
     padding-bottom: 15px;
     padding-top: 15px;
     margin: 0;
@@ -63,6 +75,7 @@ section {
     gap: 10px;
     margin-left: 30px;
     align-content: center;
+    transition: all 0.8s ease-in-out;
 }
 
 .auction-item {
