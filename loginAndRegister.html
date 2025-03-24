@@ -11,7 +11,7 @@
     <header class="header">
         <nav class="navbar">
           <ul>
-            <li><a href="home.html"></a></li>
+            <li><a href="home.html">Home</a></li>
             <li><a href="auction-listings.html">Auctions</a></li>
             <li><a href="help.html">Help</a></li>
           </ul>
@@ -20,10 +20,9 @@
 
     <main>
 
-    <div class="log-reg-container"></div>
         <div class="container" id = "container">
             <div class="form-container sign-up">
-                <form>
+                <form id = "sign-up-form">
                     <h1>Create Account</h1>
                     <div class="social-icons">
                         <a class="fa-brands fa-google"></a>
@@ -32,15 +31,15 @@
                         <a class="fa-brands fa-linkedin-in"></a>
                     </div>
                     <span>or use your email for registration</span>
-                    <input type="text" placeholder="Name">
-                    <input type="email" placeholder="Email">
-                    <input type="password" placeholder="Password">
+                    <input type="text" id="register-name" placeholder="Name">
+                    <input type="email" id="register-email" placeholder="Email">
+                    <input type="password" id="register-password" placeholder="Password">
                     <button>Sign Up</button>
                 </form>
             </div>
 
             <div class="form-container sign-in">
-                <form>
+                <form id="sign-in-form">
                     <h1>Sign In</h1>
                     <div class="social-icons">
                         <a class="fa-brands fa-google"></a>
@@ -71,9 +70,7 @@
 
                 </div>
             </div>
-
         </div>
-    </div>
 
     </main>
     
@@ -95,7 +92,59 @@
             signInBtn.addEventListener('click', () => {
                 container.classList.remove('active');
             });
+
+            const signUpForm = document.getElementById('sign-up-form');
+            const signInForm = document.getElementById('sign-in-form');
+
+            signUnForm.addEventListener("submit", async (event) => {
+                event.preventDefault();
+
+                const name = document.getElementById("register-name");
+                const email = document.getElementById("register-email");
+                const password = document.getElementById("register-password");
+
+                const res = await fetch('', {
+                    method : 'POST',
+                    headers : {'Content-Type' : 'application/json'},
+                    body : JSON.stringify({name, email, password})
+                });
+
+                const data = res.json();
+                alert(data.message);
+
+            });
+
+            signInForm.addEventListener('submit', async(event) => {
+                event.preventDefault();
+
+                const email = document.getElementById('login-email');
+                const password = document.getElementById('login-password');
+
+                const res = await fetch('', {
+                    method : 'POST',
+                    headers : {'Content-Type' : 'applcation/json'},
+                    body : JSON.stringify({email, password})
+                });
+
+                const data = res.json();
+
+                if (res.ok) {
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    localStorage.setItem('isLoggedIn', "true");
+                    alert("Login Successful...!");
+                    window.location.href = 'auction-listings.html';
+                } else {
+                    alert(data.message);
+                }
+
+            });
+
+
         });
+
+
+        
     </script>
+
 </body>
 </html>

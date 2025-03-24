@@ -144,24 +144,33 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      const startTimeInput = document.getElementById('start-time');
-      const endTimeInput = document.getElementById('end-time');
-      const productForm = document.getElementById('productForm');
 
-      startTimeInput.min = getLocalDateTimePlusMinutes(5);
-      startTimeInput.addEventListener('change', () => {
-        if (startTimeInput.value) {
-          endTimeInput.min = startTimeInput.value;
-        }
-      });
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
 
-      productForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        if (validateProduct()) {
-          alert("Product added successfully!");
-          window.location.href = "home.html";
-        }
-      });
+      if (isLoggedIn) {
+        const startTimeInput = document.getElementById('start-time');
+        const endTimeInput = document.getElementById('end-time');
+        const productForm = document.getElementById('productForm');
+
+        startTimeInput.min = getLocalDateTimePlusMinutes(5);
+        startTimeInput.addEventListener('change', () => {
+          if (startTimeInput.value) {
+            endTimeInput.min = startTimeInput.value;
+          }
+        });
+
+        productForm.addEventListener('submit', (event) => {
+          event.preventDefault();
+          if (validateProduct()) {
+            alert("Product added successfully!");
+            window.location.href = "home.html";
+          }
+        });
+
+      } else {
+        alert('You must be logged in to view this page...');
+        window.location.href('loginAndRegister.html');
+      }
     });
   </script>
 </body>

@@ -40,7 +40,15 @@
     <script src="js/newscript.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            renderAuctions('all');
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+            if (isLoggedIn) {
+                renderAuctions('all');
+            } else {
+                alert('You must be Logged in To View this Page...!');
+                window.location.href = "loginAndRegister.html";
+            }
+
         });
     </script>
     
