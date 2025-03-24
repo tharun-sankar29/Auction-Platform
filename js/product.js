@@ -78,10 +78,6 @@ window.renderProductPage = function(auction_id) {
         alert(`Bid of ${bidAmount} submitted!`);
         document.getElementById("currentBid").innerHTML = 'Current Bid: $'+bid; 
         }
-            const bidUpdate = document.getElementById('submitBid');
-            bidUpdate.addEventListener('click', function(event) {
-                document.getElementById("#currentBid").innerHTML = bid;
-            })
         document.getElementById('bidModal').style.display = 'none';
     };
 }
