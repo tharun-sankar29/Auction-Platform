@@ -76,7 +76,7 @@ app.get('/products', async (req, res) => {
         .then(products => renderProducts(products))
         .catch(error => console.error('Error fetching products:', error));
     }
-  
+    //I think it's wrong. I will check later
     function renderProducts(products) {
       const container = document.getElementById('product-container');
       container.innerHTML = ''; 
