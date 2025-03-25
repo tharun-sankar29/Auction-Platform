@@ -55,6 +55,10 @@ app.post('/proDet', async (req, res) => {
   }
 });
 
+app.get('/products', (req,res) => {
+    productSchema.find({});
+})
+
 app.listen(4000, () => {
   console.log("Server running on port 4000");
 });
