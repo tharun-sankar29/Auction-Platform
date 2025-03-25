@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Add New Product</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/seller.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/seller.css">
 </head>
 <body>
   <header>
@@ -20,22 +20,14 @@
   
   <div class="product-form-container">
     <h2>Add New Product</h2>
-    <form id="productForm">
+    <form id="productForm" method="post" action="/proDet" enctype="multipart/form-data">
       <div>
         <label for="product-id">Product ID:</label>
         <input type="text" id="product-id" name="product-id" required>
         <div class="error-message" id="product-id-error"></div>
       </div>
       <div>
-        <label for="category">Category:</label>
-        <select id="category" name="category" required>
-          <option value="">Select Category</option>
-          <option value="electronics">Electronics</option>
-          <option value="fashion">Fashion</option>
-          <option value="home">Home & Garden</option>
-          <option value="collectibles">Collectibles</option>
-          <option value="other">Other</option>
-        </select>
+        <label for="img">image: </label> <input type="text" id="img" name="img" placeholder="Enter image URL">
         <div class="error-message" id="category-error"></div>
       </div>
       <div>
@@ -70,7 +62,7 @@
   <footer>
     <p>&copy; 2025 Auction Platform. All rights reserved.</p>
   </footer>
-  
+  <script src="/js/productSeller.js"></script>
   <script>
     function getLocalDateTimePlusMinutes(minutesOffset) {
       const now = new Date();
@@ -81,7 +73,6 @@
 
     function validateProduct() {
       const productId = document.getElementById('product-id').value.trim();
-      const category = document.getElementById('category').value;
       const name = document.getElementById('name').value.trim();
       const price = document.getElementById('price').value.trim();
       const description = document.getElementById('description').value.trim();
@@ -95,13 +86,12 @@
       }
 
       function hideErrorMessage(id) {
-            const errorElement = document.getElementById(id);
-            errorElement.style.display = 'none';
-            errorElement.textContent = '';
+        const errorElement = document.getElementById(id);
+        errorElement.style.display = 'none';
+        errorElement.textContent = '';
       }
 
       hideErrorMessage('product-id-error');
-      hideErrorMessage('category-error');
       hideErrorMessage('name-error');
       hideErrorMessage('price-error');
       hideErrorMessage('description-error');
@@ -111,11 +101,6 @@
       const productIdRegex = /^[A-Za-z0-9-_]+$/;
       if (!productIdRegex.test(productId)) {
           showErrorMessage('product-id-error', 'Product ID can only contain letters, numbers, hyphens, and underscores.');
-          return false;
-      }
-  
-      if (!category) {
-          showErrorMessage('category-error', 'Please select a category.');
           return false;
       }
   
@@ -144,7 +129,6 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-
       const isLoggedIn = localStorage.getItem('isLoggedIn');
 
       if (isLoggedIn) {
@@ -162,14 +146,12 @@
         productForm.addEventListener('submit', (event) => {
           event.preventDefault();
           if (validateProduct()) {
-            alert("Product added successfully!");
-            window.location.href = "home.html";
+            productForm.submit();
           }
         });
-
       } else {
         alert('You must be logged in to view this page...');
-        window.location.href('loginAndRegister.html');
+        window.location.href = 'loginAndRegister.html';
       }
     });
   </script>
