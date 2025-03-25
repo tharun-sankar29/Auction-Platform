@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const mongoose = require('mongoose');
 const User = require('./User');
-const { time } = require('console');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
