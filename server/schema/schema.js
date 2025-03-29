@@ -6,6 +6,16 @@ const UserSchema = new mongoose.Schema({
     password : String
 });
 
+const ProductSchema = new mongoose.Schema({
+  _id: String,
+  img: String,        
+  Name: String,
+  price: Number,
+  Description: String,
+  Start: Date,
+  End: Date
+});
+
 // const AuctionItemsSchema = new mongoose.Schema({
 //     name : String,
 //     auction_id : String,
@@ -15,7 +25,9 @@ const UserSchema = new mongoose.Schema({
 //     AddedOnDate : String
 // });
 
-module.exports = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', UserSchema);
+const Products = mongoose.model('Product', ProductSchema);
 // module.exports = mongoose.model('AuctionItems', AuctionItemsSchema);
 
 
+module.exports = {User, Products};

@@ -19,10 +19,9 @@
     </header>
 
     <main>
-
         <div class="container" id = "container">
             <div class="form-container sign-up">
-                <form id = "sign-up-form">
+                <form id="sign-up-form" action="/auth/login" method="post">
                     <h1>Create Account</h1>
                     <div class="social-icons">
                         <a class="fa-brands fa-google"></a>
@@ -39,7 +38,7 @@
             </div>
 
             <div class="form-container sign-in">
-                <form id="sign-in-form">
+                <form id="sign-in-form" action="/auth/register" method="post">
                     <h1>Sign In</h1>
                     <div class="social-icons">
                         <a class="fa-brands fa-google"></a>
@@ -91,7 +90,7 @@
             });
         });
     </script>
-    <script src="js/login.js"></script>
+    <script src="js/auth.js"></script>
 
 </body>
 </html>
