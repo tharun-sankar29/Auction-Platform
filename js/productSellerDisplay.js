@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     //I think it's wrong. I will check later
     function renderProducts(products) {
-      const container = document.getElementById('product-container');
+      const container = dwocument.getElementById('product-container');
       container.innerHTML = ''; 
       products.forEach(product => {
         const productHTML = `
