@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {ProductModel} = require('./schema/schema')
+const {ProductModel} = require('./schema/schema');
 
 
 //Add new product
