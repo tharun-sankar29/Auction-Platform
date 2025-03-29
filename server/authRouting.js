@@ -33,7 +33,6 @@ router.post('/register', async (req, res) => {
             return res.status(409).json({ message: 'User already exists, Please Login...' });  // 409 Conflict
         }
 
-        // ✅ Use Mongoose `.create()` instead of `.insertOne()`
         const newUser = await User.create({ name, email, password });
         await newUser.save();
 
