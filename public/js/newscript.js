@@ -28,7 +28,7 @@ window.renderAuctions  = function(auction_type) {
         auctionElement.classList.add("auction-item");
         auctionElement.innerHTML = `
             <h3 class = "auction-item-title">${auction.title}</h3>
-            <img src="images/auction-items/${auction.id}.jpg">
+            <img src="/images/auction-items/${auction.id}.jpg">
             <p>Current Bid: ${auction.price}</p>
             <p>Time Left: ${auction.timeLeft}</p>
             <button class="placebid" onclick="placeBid(${auction.id})">Place Bid</button>

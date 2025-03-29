@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auction Listings</title>
-    <link rel="stylesheet" href="css/auction-listings.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="/css/auction-listings.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
     <header>
@@ -13,7 +13,6 @@
             <ul>
                 <li><a href="home.html">Home</a></li>
                 <li><a href="auction-listings.html">Auctions</a></li>
-                
                 <li><a href="help.html">Help</a></li>
             </ul>
         </nav>
@@ -31,13 +30,13 @@
                 <option value="other">Other</option>
             </select>
             <input type="text" id="search" placeholder="Search for auction items...">
-            <img src="images/search.png" alt="Search" id="search-button" class="search-image">
+            <img src="/images/search.png" alt="Search" id="search-button" class="search-image">
         </div>
         <div class="auction-container" id="auction-container">
         </div>
     </main>
 
-    <script src="js/newscript.js"></script>
+    <script src="/js/newscript.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const isLoggedIn = localStorage.getItem('isLoggedIn');

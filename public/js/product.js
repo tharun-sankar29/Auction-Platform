@@ -15,7 +15,7 @@ window.renderProductPage = function(auction_id) {
     const productContainer = document.getElementById("product-container");
     productContainer.innerHTML = `
         <h2>${auction.title}</h2>
-        <img src="images/auction-items/${auction.id}.jpg">
+        <img src="/images/auction-items/${auction.id}.jpg">
         <p id="currentBid">Current Bid: ${auction.price}</p>
         <p>Time Left:<p id="timeLeft"> ${auction.timeLeft}</p></p>
         <button class = "add-review" onclick="window.location.href='review.html?auction_id=${auction.id}'">Add Review</button>

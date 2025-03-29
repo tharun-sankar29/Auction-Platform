@@ -2,6 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const mongoose = require('mongoose');
+
+
+//import all routings...
 const authRoutes = require('./authRouting');
 const ProductSellerRoutings = require('./productSellerRouting');
 
@@ -10,14 +13,12 @@ const app = express();
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
+//set routing address..
 app.use('/auth', authRoutes);
 app.use('/products', ProductSellerRoutings);
 
 // Serve static files from multiple folders
-app.use('/css', express.static(path.join(__dirname, '../css')));  // CSS folder
-app.use('/js', express.static(path.join(__dirname, '../js')));    // JS folder
-app.use('/', express.static(path.join(__dirname, '../')));        // HTML files in the root
+app.use(express.static(path.join(__dirname, '../public')));
 
 const MONGODB_URL = 'mongodb://localhost:27017/auctionDB';   //Fil it later.....
 const PORT = 5000;

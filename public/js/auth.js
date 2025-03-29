@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const SignInForm = document.getElementById('sign-in-form');
     const SignUpForm = document.getElementById('sign-up-form');
 
-    // ✅ SIGN-IN FORM HANDLER
+    //  SIGN-IN FORM HANDLER
     SignInForm.addEventListener('submit', async (event) => {
         event.preventDefault();
 
@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ email, password })
             });
 
-            // ✅ Await res.text() or res.json() properly
             const data = await res.json();  
 
             if (res.ok) {
@@ -33,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ✅ SIGN-UP FORM HANDLER
+    //  SIGN-UP FORM HANDLER
     SignUpForm.addEventListener('submit', async (event) => {
         event.preventDefault();
 
@@ -42,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = document.getElementById('register-password').value;
 
         try {
-            // ✅ Add await before fetch
             const res = await fetch('/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -57,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (res.ok) {
                 console.log('New user added...');
                 alert(data.message || 'Registered Successfully');
-                window.location.href = 'home.html';   // Redirect after successful registration
+                window.location.href = 'home.html';   
             } else {
                 console.error('New user not added...');
                 alert(data.error || 'Something went wrong. Please try again.');
