@@ -27,9 +27,6 @@ app.post('/proDet', async (req,res) => {
     const {'product-id' : product_id, 'seller-id' : seller_id, catogary, name, description, price, img,
         'end-time': end 
     } = req.body;
-    const endTime = end.getTime();
-    const currentTime = Date.now();
-    const remainingTime = endTime - currentTime;
     try {
         const newProduct = new productSchema({product_id: product-id, seller_id : seller-id,
             catogary_id : catogary, title: name, description: description, starting_price : price,
@@ -41,21 +38,22 @@ app.post('/proDet', async (req,res) => {
         res.status(400).send("Unsuccessful");
         console.log("Error ", err);
     }
-    //To automatically delete products if time expires
-    setInterval(function() {
-        currentTime = Date.now();
-        remainingTime = endTime - currentTime;
-        if (remainingTime === 0) {
-            const updateProduct = Products.find();
-            updateProduct.status_of_product = "Dead";
-            updateProduct.save();
-        }
-        if (Prodcuts.find({status_of_product : "Dead"})) {
-            const deleteProduct = updateProduct.find({status_of_product: "Dead"});
-            deleteProduct.remove();
-        }
-    }, 1000)
 })
+const endTime = new Date(end).getTime();
+setInterval(async function() {
+    const currentTime = Date.now();
+    try {
+        await productModel.updateMany(
+            { endTime: { $lte: currentTime }, status_of_product: "Alive" },
+            { $set: { status_of_product: "Dead" } }
+        );
+        
+        await productModel.deleteMany({ status_of_product: "Dead" });
+    } catch (error) {
+        console.error("Cleanup error: ", error);
+    }
+}, 1000);
+
 
 
 const SchemaAuc = mongoose.Schema({});
