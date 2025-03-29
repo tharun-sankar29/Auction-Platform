@@ -36,21 +36,13 @@
         </div>
     </main>
 
-    <script src="/js/newscript.js"></script>
+    <script src="/js/auction-fetch.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const isLoggedIn = localStorage.getItem('isLoggedIn');
-
-            if (isLoggedIn) {
-                renderAuctions('all');
-            } else {
-                alert('You must be Logged in To View this Page...!');
-                window.location.href = "loginAndRegister.html";
-            }
-
-        });
+            fetchAuctions();
+        })
     </script>
-    
+
     <footer>
         <p>&copy; 2025 Auction Platform. All rights reserved.</p>
     </footer>

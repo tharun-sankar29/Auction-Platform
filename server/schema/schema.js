@@ -16,18 +16,31 @@ const ProductSchema = new mongoose.Schema({
   End: Date
 });
 
-// const AuctionItemsSchema = new mongoose.Schema({
-//     name : String,
-//     auction_id : String,
-//     rating : String,
-//     img : String,
-//     TimeRemaining : String,
-//     AddedOnDate : String
-// });
+const auctionSchema = new mongoose.Schema({
+    title: String,                    // Product title
+    description: String,              // Product description
+    img: String,                      // Image path
+    start_time: Date,                 // Auction start time
+    end_time: Date,                   // Auction end time
+    price: Number,                    // Starting price
+    seller_id: mongoose.Schema.Types.ObjectId,  // Seller ID (from users collection)
+    bids: [
+        {
+            user_id: mongoose.Schema.Types.ObjectId,   // Bidder ID
+            amount: Number,                            // Bid amount
+            bid_time: { type: Date, default: Date.now }
+        }
+    ]
+});
+
+
+
 
 const User = mongoose.model('User', UserSchema);
 const Products = mongoose.model('Product', ProductSchema);
-// module.exports = mongoose.model('AuctionItems', AuctionItemsSchema);
+const Auctions = mongoose.model('Auction', auctionSchema);
+;
 
 
-module.exports = {User, Products};
+
+module.exports = {User, Products, Auctions};

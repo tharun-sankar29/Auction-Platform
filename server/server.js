@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 
 //import all routings...
 const authRoutes = require('./authRouting');
-const ProductSellerRoutings = require('./productSellerRouting');
+const auctionRoutes = require('./auctionsRouting');
 
 
 const app = express();
@@ -15,10 +15,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //set routing address..
 app.use('/auth', authRoutes);
-app.use('/products', ProductSellerRoutings);
+app.use('/auctions', auctionRoutes);
 
 // Serve static files from multiple folders
 app.use(express.static(path.join(__dirname, '../public')));
+app.use('/', express.static(path.join(__dirname, '../public/html')));
+
 
 const MONGODB_URL = 'mongodb://localhost:27017/auctionDB';   //Fil it later.....
 const PORT = 5000;
