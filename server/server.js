@@ -23,21 +23,18 @@ const MONGODB_URL = 'mongodb://localhost:27017/auctionDB';   //Fil it later.....
 const PORT = 5000;
 
 
-mongoose.connect(MONGODB_URL, {
-    useNewUrlParser : true,
-    useUnifiedTopology : true
-})
+mongoose.connect(MONGODB_URL)
 .then(() => console.log('✅ Connected to MongoDB'))
-.catch(err => console.error(('❌ MongoDB connection failed:', err)))
+.catch(err => console.error(('❌ MongoDB connection failed:', err)));
 
 
 
 // Routes
 app.get('/', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../home.html'));  // Serve home.html
+    res.sendFile(path.resolve(__dirname, '../public/html/home.html'));  // Serve home.html
 });
 
 
 app.listen(PORT, () => {
-    console.log('Listening on port ${PORT}...');
+    console.log(`Listening on port ${PORT}...`);
 });
