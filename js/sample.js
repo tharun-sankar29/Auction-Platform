@@ -9,7 +9,7 @@ mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
 .then(() => console.log("Connected to mongoDB"))
 .catch(err => console.log("Error in connection", err));
 
-const Schema = mongoose.Schema;
+const SchemaPro = mongoose.Schema;
 const productSchema = new Schema ({
     product_id : {type: String, unique: true},
     seller_id : {type: String, unique: true},
@@ -56,4 +56,8 @@ app.post('/proDet', async (req,res) => {
         }
     }, 1000)
 })
+
+
+const SchemaAuc = mongoose.Schema({});
+app.listen(3000, () => console.log("Listening"));
 
