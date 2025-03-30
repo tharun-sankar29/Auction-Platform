@@ -25,21 +25,21 @@ app.use(session({
 app.use(express.static(path.join(__dirname, '../public')));
 
 //authentication for session
-app.post('/auth/login', async (req, res) => {
-    const { email, password } = req.body;
-    try {
-      const user = await User.findOne({ email });
-      if (user && user.password === password) {
-        req.session.userId = user._id;
-        res.redirect('/profile');
-      } else {
-        res.status(401).send('Invalid credentials');
-      }
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Server error');
-    }
-  });
+// app.post('/auth/login', async (req, res) => {
+//     const { email, password } = req.body;
+//     try {
+//       const user = await User.findOne({ email });
+//       if (user && user.password === password) {
+//         req.session.userId = user._id;
+//         res.redirect('/profile');
+//       } else {
+//         res.status(401).send('Invalid credentials');
+//       }
+//     } catch (err) {
+//       console.error(err);
+//       res.status(500).send('Server error');
+//     }
+//   });
 
 
 app.get('../profile.ejs.html', async (req, res) => {

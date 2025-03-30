@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { User } = require('./schema/schema');
+const { User, Auction, Dead } = require('./schema/schema'); 
 
 // ✅ LOGIN Route
 router.post('/login', async (req, res) => {
@@ -61,6 +61,41 @@ router.get('/session', (req, res) => {
         res.json({ user_id: req.session.user_id });
     } else {
         res.status(401).json({ message: 'Not logged in' });
+    }
+});
+
+router.get('/profile', async (req, res) => {
+    if (!req.session.user_id) {
+        return res.status(401).json({ message: 'No such user. Please login.' });
+    }
+
+    try {
+        const userData = await User.findById(req.session.user_id);
+        const soldData = await Auction.find({ seller_id: req.session.user_id });
+        const activeAuctions = await Auction.find({ seller_id: req.session.user_id, status: { $ne: "Dead" } });
+        const deadData = await Dead.find({ seller_id: req.session.user_id });
+
+        // Function to compute the max bid amount
+        const computeMaxBid = (auction) => {
+            return auction.bids.reduce((max, bid) => bid.amount > max ? bid.amount : max, 0);
+        };
+
+        // Add max bid amount to each auction object
+        soldData.forEach(auction => auction.maxamount = computeMaxBid(auction));
+        activeAuctions.forEach(auction => auction.maxamount = computeMaxBid(auction));
+        deadData.forEach(dead => dead.maxamount = computeMaxBid(dead));
+
+        // Render the profile view
+        res.render('profile', { 
+            user: userData, 
+            soldProduct: soldData, 
+            auction: activeAuctions, 
+            Deadauction: deadData,
+        });
+
+    } catch (err) {
+        console.error('Error fetching profile data:', err);
+        res.status(500).send('Server error');
     }
 });
 
