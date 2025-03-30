@@ -18,8 +18,21 @@ app.use('/auth', authRoutes);
 app.use('/auctions', auctionRoutes);
 
 // Serve static files from multiple folders
+
 app.use(express.static(path.join(__dirname, '../public')));
 app.use('/', express.static(path.join(__dirname, '../public/html')));
+
+// Catch-all route to serve HTML files with query parameters
+app.get('/:file', (req, res) => {
+    const filePath = path.join(__dirname, '../public/html', req.params.file);
+
+    // Check if the file exists and serve it
+    res.sendFile(filePath, (err) => {
+        if (err) {
+            res.status(404).send('File not found');
+        }
+    });
+});
 
 
 const MONGODB_URL = 'mongodb://localhost:27017/auctionDB';   //Fil it later.....
