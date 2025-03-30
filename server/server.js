@@ -51,7 +51,7 @@ app.get('../profile.ejs.html', async (req, res) => {
       const deadData = await Dead.find({ seller_id: req.session.userId });
 
       const computeMaxBid = (auction) => {
-        let maxBid = 0;
+        let maxBid = 0;w
         auction.bids.forEach(bid => {
           if (bid.amount > maxBid) {
             maxBid = bid.amount;
@@ -89,10 +89,6 @@ app.use(session({
     secret: 'auction_secret',
     resave: false,
     saveUninitialized: false,
-    cookie: {secure : false,
-        httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 24
-    }
 }));
 
 const authMiddleware = (req, res, next) => {
