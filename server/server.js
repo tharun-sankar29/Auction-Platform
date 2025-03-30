@@ -4,33 +4,77 @@ const path = require('path');
 const mongoose = require('mongoose');
 const session = require('express-session');
 
-const { User } = require('../../server/schema/schema');
+const { User, Auction, Product, Dead } = require('../../server/schema/schema');
 
 //session initialization
-app.use(session ({
-    secret: 'User',
-    resave: false,
-    saveUninitialized: true
+// ejs view
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '../public/html'));
+
+// Middleware
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({
+  secret: 'auction_secret',
+  resave: false,
+  saveUninitialized: false,
 }));
 
-//storing user id in session
+app.use(express.static(path.join(__dirname, '../public')));
+
+//authentication for session
 app.post('/auth/login', async (req, res) => {
-    const {email, password} = req.body;
-    const user = await User.findOne({ email });
-    if (user && user.password === password) {
+    const { email, password } = req.body;
+    try {
+      const user = await User.findOne({ email });
+      if (user && user.password === password) {
         req.session.userId = user._id;
+        res.redirect('/profile');
+      } else {
+        res.status(401).send('Invalid credentials');
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Server error');
     }
-})
-//finding that particular user data from mongoose
-app.get('/public/html/profile.ejs.html', async (req,res) => {
-    if(!req.session.userId) res.json('No such user');
-    else {
-        const userData = await User.findById(req.session.userId);
-        res.render('/public/html/profile.ejs.html', {user: userData}); //user acts as object in profile.ejs.html
+  });
+
+
+app.get('../profile.ejs.html', async (req, res) => {
+    if (!req.session.userId) {
+      return res.status(401).json('No such user');
     }
-})
-//set up ejs view
-app.set('view engine', 'ejs');
+    try {
+      const userData = await User.findById(req.session.userId);
+      const soldData = await Auction.find({ seller_id: req.session.userId });
+      const activeAuctions = await Auction.find({ seller_id: req.session.userId, status: { $ne: "Dead" } });
+      const deadData = await Dead.find({ seller_id: req.session.userId });
+
+      const computeMaxBid = (auction) => {
+        let maxBid = 0;
+        auction.bids.forEach(bid => {
+          if (bid.amount > maxBid) {
+            maxBid = bid.amount;
+          }
+        });
+        return maxBid;
+      };
+  
+      soldData.forEach(auction => auction.maxamount = computeMaxBid(auction));
+      activeAuctions.forEach(auction => auction.maxamount = computeMaxBid(auction));
+      deadData.forEach(dead => dead.maxamount = computeMaxBid(dead));
+      
+      res.render('../profile.ejs.html', { 
+        user: userData, 
+        soldProduct: soldData, 
+        auction: activeAuctions, 
+        Deadauction: deadData 
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Server error');
+    }
+  });
 
 //import all routings...
 const authRoutes = require('./authRouting');
