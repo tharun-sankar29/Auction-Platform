@@ -6,7 +6,7 @@ const session = require('express-session');
 
 const app = express();
 
-const { User, Auction, Product, Dead,} = require('./schema/schema');
+const { User, Auction, Product, Dead, Payment} = require('./schema/schema');
 
 //session initialization
 // ejs view
@@ -51,6 +51,7 @@ app.get('../profile.ejs.html', async (req, res) => {
       const soldData = await Auction.find({ seller_id: req.session.userId });
       const activeAuctions = await Auction.find({ seller_id: req.session.userId, status: { $ne: "Dead" } });
       const deadData = await Dead.find({ seller_id: req.session.userId });
+      const payData = await Payment.find({user_id: req.session.userId});
 
       const computeMaxBid = (auction) => {
         let maxBid = 0;
@@ -71,6 +72,7 @@ app.get('../profile.ejs.html', async (req, res) => {
         soldProduct: soldData, 
         auction: activeAuctions, 
         Deadauction: deadData,
+        payment: payData
       });
     } catch (err) {
       console.error(err);
@@ -99,6 +101,41 @@ app.get('../feedback.ejs.html', async (req,res) => {
     } catch (err) {
         console.error(err)
     }
+});
+
+app.get('../payment.ejs.html', async (req, res) => {
+  try {
+    const deadData = await Dead.findById(req.params.deadId);
+    if (!deadData) {
+      return res.status(404).send("Dead auction not found.");
+    }
+  
+    res.render('../payment.ejs.html', { amount: deadData.maxamount, deadId: deadData._id });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error.");
+  }
+});
+
+// Route to handle payment submission
+app.post('/payment', async (req, res) => {
+  try {
+    const { deadId, amt, payment_method } = req.body;
+    const userId = req.session.userId || null;
+
+    const newPayment = new Payment({
+      user_id: userId,
+      dead_id: deadId, 
+      payment_status: 'Pending', 
+      amount: amt 
+    });
+    await newPayment.save();
+
+    res.status(201).send("Payment processed successfully!");
+  } catch (err) {
+    console.error("Payment error:", err);
+    res.status(400).send("Payment failed.");
+  }
 });
 
 //import all routings...
