@@ -13,7 +13,8 @@ const ProductSchema = new mongoose.Schema({
   price: Number,
   Description: String,
   Start: Date,
-  End: Date
+  End: Date,
+  status: String
 });
 
 const auctionSchema = new mongoose.Schema({
@@ -33,14 +34,28 @@ const auctionSchema = new mongoose.Schema({
     ]
 });
 
-
+const deadSchema = new mongoose.Schema({
+    title: String,
+    description: String,
+    img: String,
+    price: String,
+    end_time: Date,
+    bids: [
+        {
+            user_id: mongoose.Schema.Types.ObjectId,
+            amount: Number,
+            bid_time: {type: Date, default: Date.now }
+        }
+    ]
+});
 
 
 const User = mongoose.model('User', UserSchema);
 const Products = mongoose.model('Product', ProductSchema);
 const Auctions = mongoose.model('Auction', auctionSchema);
+const Deads = mongoose.Model('Dead', deadSchema);
 ;
 
 
 
-module.exports = {User, Products, Auctions};
+module.exports = {User, Products, Auctions, Deads};

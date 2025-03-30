@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Profile</title>
+      <link rel="stylesheet" href="/css/styles.css">
+      <script src="/server/schema/schema.js"></script>
+  </head>
+  <body>
+      <!-- user.name is stored in session -->
+      <h1><%= user.name %> Profile</h1> 
+      
+      <div id="container">
+          <div id="sold">
+              <% if (soldProduct && soldProduct.length > 0) { %>
+                  <% soldProduct.forEach(function(product) { %>
+                      <div class="product">
+                          <img src="<%= product.img %>" alt="<%= product.Name %>">
+                          <h3 class="name"><%= product.Name %></h3>
+                          <p>Price: <%= product.Price %></p>
+                          <p>Sold price: <%= product.auction ? product.auction.bids.maxamount : "No Product available" %></p>
+                          <p>Buyer: <%= product.auction ? product.auction.bids.user._id : "No user available" %></p>
+                      </div>
+                  <% }); %>
+              <% } else { %>
+                  <p class="noProduct">No Product Sold</p>
+              <% } %>
+          </div>
+          
+          <div class="Bids">
+              <% if (auction && auction.length > 0) { %>
+                  <% auction.forEach(function(myBid) { %>
+                      <% if (myBid.bids.user_id === user._id && myBid.status === "Dead") { %>
+                      <div class="myBids">
+                          <h3 class="bid"><%= myBid.title %></h3>
+                          <img src="<%= myBid.img %>" alt="<%= myBid.title %>">
+                          <p class="price"><%= myBid.price %></p>
+                          <p class="myBidAmount"><%= myBid.bids.amount %></p>
+                          <p class="endingTime"><%= myBid.end_time %></p>
+                      </div>
+                      <% } %>
+                  <% }); %>
+              <% } else { %>
+                  <p class="NoBids">No active Bids</p>
+              <% } %>
+          </div>
+          <div class="Bought">
+            <% if(Deadauction && Deadauction.length > 0) { %>
+                <% Deadauction.forEach(function(dead) { %>
+                    <% if (dead.bids.user_id === user._id && dead.bids.amount === maxbid) { %>
+                    <div class="myBought">
+                        <h3 class="bought"><%= dead.title</h3>
+                        <img src="<%= dead.img %>" alt="<%= dead.title %>">
+                        <p class="price"><%= dead.price %></p>
+                        <p class="final"><%= dead.bids.amount %></p>
+                    </div>
+                   <% } %>
+               <% }); %>
+           <% } else { %>
+            <p class="noBuys">No item Bought</p>
+           }
+          </div>
+      </div>
+  </body>
+</html>
