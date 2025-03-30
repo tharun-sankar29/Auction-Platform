@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (res.ok) {
                 alert(data.message || 'Login successful!');  
-                window.location.href = '/auth/profile';  // ✅ Correct redirection syntax
+                window.location.href = 'home.html';  // ✅ Correct redirection syntax
             } else {
                 alert(data.error || 'Invalid credentials');
             }
