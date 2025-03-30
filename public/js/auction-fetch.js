@@ -40,3 +40,6 @@ const fetchAuctions = async () => {
         console.error('Error fetching auctions:', err);
     }
 };
+
+// After rendering all auctions
+

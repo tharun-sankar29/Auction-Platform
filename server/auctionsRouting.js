@@ -15,6 +15,7 @@ router.get('/all', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
+    console.log('Receive id: ' + req.params.id);
     try {
         const auction = await Auctions.findById(req.params.id);
         if(!auction) {

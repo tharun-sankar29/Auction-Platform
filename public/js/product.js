@@ -11,7 +11,7 @@ window.renderProductPage = async function(auction_id) {
         const productContainer = document.getElementById("product-container");
         productContainer.innerHTML = `
             <h2>${auction.title}</h2>
-            <img src="/images/auction-items/${auction.img}" alt="${auction.title}" style="width: 100%; max-height: 300px;">
+            <img src="${auction.img}" alt="${auction.title}" style="width: 100%; max-height: 300px;">
             <p id="currentBid">Current Bid: $${auction.bids.length > 0 
                 ? Math.max(...auction.bids.map(bid => bid.amount)) 
                 : auction.price}</p>

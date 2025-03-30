@@ -41,14 +41,14 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const params = new URLSearchParams(window.location.search);
-        const auctionId = params.get('auction_id');
+        const auctionId = params.get('id');
         console.log(auctionId);
 
         if (auctionId === null) {
             alert("Auction not found");
             return;
         } else {
-            renderProductPage(parseInt(auctionId));
+            renderProductPage(auctionId);
         }
     });
 
