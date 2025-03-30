@@ -1,109 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-      $(document).ready(function() {
-        $(".dispGpay").hide();
-        $(".dispNet").hide();
-        $("#paymentBtn").prop('disabled', true);
-
-        $(".gpay").click(function() {
-          $(".dispGpay").show();
-          $(".dispNet").hide();
-          clearNetInputs();
-          $("#payment_method").val("Gpay");
-          checkDetails();
-        });
-
-        $(".net").click(function() {
-          $(".dispNet").show();
-          $(".dispGpay").hide();
-          clearGpayInputs();
-          $("#payment_method").val("Net");
-          checkDetails();
-        });
-
-        function clearGpayInputs() {
-          $("#email").val('');
-          $("#ID").val('');
-          $("#amt").val('<%= amount %>');
-        }
-
-        function clearNetInputs() {
-          $("#netUser").val('');
-          $("#netPass").val('');
-          $("#netAmt").val('<%= amount %>');
-        }
-
-        function checkDetails(){
-          var gpayVisible = $(".dispGpay").is(":visible");
-          var netVisible = $(".dispNet").is(":visible");
-          var gpayValid = true;
-          var netValid = true;
-  
-          if(gpayVisible){
-            if($("#email").val() === "" || $("#ID").val() === "" || $("#amt").val() === ""){
-              gpayValid = false;
-            }
-          }
-  
-          if(netVisible){
-            if($("#bank").val() === "" || $("#netUser").val() === "" || $("#netPass").val() === "" || $("#netAmt").val() === ""){
-              netValid = false;
-            }
-          }
-  
-          if((gpayVisible && gpayValid) || (netVisible && netValid)){
-            $("#paymentBtn").prop('disabled', false);
-          } else {
-            $("#paymentBtn").prop('disabled', true);
-          }
-        }
-        $("input, select").on("input change", function() {
-          checkDetails();
-        });
-      });
-    </script>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Profile</title>
+      <link rel="stylesheet" href="/css/styles.css">
   </head>
   <body>
-    <h1>Make Payment</h1>
-    <form action="/payment" method="post">
-      <input type="hidden" name="deadId" value="<%= deadId %>">
-      <div class="pay">
-        <p class="gpay" style="cursor:pointer;">Pay via Gpay</p>
-        <div class="dispGpay">
-          <label for="email">Email</label>
-          <input type="email" name="email" id="email">
-          <label for="ID">Enter ID</label>
-          <input type="number" name="ID" id="ID">
-          <label for="amt">Amount</label>
-          <input type="number" step="0.01" name="amt" id="amt" value="<%= amount %>">
-        </div>
-  
-        <p class="net" style="cursor:pointer;">Pay via Net Banking</p>
-        <div class="dispNet">
-          <label for="bank">Select Bank</label>
-          <select id="bank" name="bank">
-            <option value="">--Select Bank--</option>
-            <option value="SBI">SBI</option>
-            <option value="Bank of Baroda">Bank of Baroda</option>
-            <option value="Axis Bank">Axis Bank</option>
-          </select>
-          <label for="netUser">User ID</label>
-          <input type="text" name="netUser" id="netUser">
-          <label for="netPass">Password</label>
-          <input type="password" name="netPass" id="netPass">
-          <label for="netAmt">Amount</label>
-          <input type="number" step="0.01" name="netAmt" id="netAmt" value="<%= amount %>">
-        </div>
+      <h1><%= user.name %>'s Profile</h1> 
+      
+      <div id="container">
+          <div id="sold">
+              <h2>Sold Products</h2>
+              <% if (soldProduct && soldProduct.length > 0) { %>
+                  <% soldProduct.forEach(function(product) { %>
+                      <div class="product">
+                          <img src="<%= product.img %>" alt="<%= product.title || product.name %>">
+                          <h3 class="name"><%= product.title || product.name %></h3>
+                          <p>Price: <%= product.price %></p>
+                          <p>Sold Price: <%= product.maxamount ? product.maxamount : "N/A" %></p>
+                      </div>
+                  <% }); %>
+              <% } else { %>
+                  <p class="noProduct">No Product Sold</p>
+              <% } %>
+          </div>
+          
+          <div class="Bids">
+              <h2>Active Auctions</h2>
+              <% if (auction && auction.length > 0) { %>
+                  <% auction.forEach(function(myBid) { %>
+                      <div class="myBids">
+                          <h3 class="bid"><%= myBid.title %></h3>
+                          <img src="<%= myBid.img %>" alt="<%= myBid.title %>">
+                          <p class="price">Starting Price: <%= myBid.price %></p>
+                          <p class="maxBid">Highest Bid: <%= myBid.maxamount ? myBid.maxamount : "No bids yet" %></p>
+                          <p class="endingTime">Ends at: <%= myBid.end_time ? myBid.end_time.toLocaleString() : "N/A" %></p>
+                      </div>
+                  <% }); %>
+              <% } else { %>
+                  <p class="NoBids">No active Auctions</p>
+              <% } %>
+          </div>
+
+          <div class="Bought">
+            <h2>Dead Auctions</h2>
+            <% if (Deadauction && Deadauction.length > 0) { %>
+                <% Deadauction.forEach(function(dead) { %>
+                    <div class="myBought">
+                        <h3 class="bought"><%= dead.title %></h3>
+                        <img src="<%= dead.img %>" alt="<%= dead.title %>">
+                        <p class="price">Price: <%= dead.price %></p>
+                        <p class="final">Final Bid: <%= dead.maxamount ? dead.maxamount : "No bids" %></p>
+                        <p class="btn"><button type="submit" id="btn" onclick="window.location.href='payment.ejs'">Payment</button></p>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p class="noBuys">No item Bought</p>
+            <% } %>
+          </div>
       </div>
-      <input type="hidden" name="payment_method" value="" id="payment_method">
-      <button type="submit" id="paymentBtn">Make Payment</button>
-    </form>
   </body>
 </html>
