@@ -60,12 +60,22 @@ const deadSchema = new mongoose.Schema({
     maxamount : Number
 });
 
+const PaymentSchema = new mongoose.Schema({
+    user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    dead_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Dead', required: true },
+    payment_status: { type: String, enum: ['Pending', 'Completed', 'Failed'], required: true },
+    amount: { type: Number, required: true } 
+});
+
+
 
 const User = mongoose.model('User', UserSchema);
 const Product = mongoose.model('Product', ProductSchema);
 const Auction = mongoose.model('Auction', auctionSchema);
 const Dead = mongoose.model('Dead', deadSchema);
+const Payment = mongoose.model('Payment', PaymentSchema);
+;
 
 
 
-module.exports = {User, Product, Auction, Dead};
+module.exports = {User, Product, Auction, Dead, Payment};
