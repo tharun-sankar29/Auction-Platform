@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const {Auctions} = require('./schema/schema');
+const {Auction} = require('./schema/schema');
 const mongoose = require('mongoose');
+
+const Auctions = Auction;
 
 
 router.get('/all', async (req, res) => {

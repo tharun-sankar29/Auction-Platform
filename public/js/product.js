@@ -21,8 +21,8 @@ window.renderProductPage = async function(auction_id) {
                 ? Math.max(...auction.bids.map(bid => bid.amount)) 
                 : auction.price}</p>
             <p>Time Left: <span id="timeLeft"></span></p>
-            <button class="add-review" onclick="window.location.href='review.html?auction_id=${auction._id}'">Add Review</button>
-            <button class="view-review" onlcik="window.location.href='feedback.ejs.html?auction_id=${auction._id}''>View Review</button>
+            <button class="add-review" onclick="window.location.href='review.html?id=${auction._id}'">Add Review</button>
+            <button class="view-review" onlcik="window.location.href='feedback.ejs.html?id=${auction._id}''>View Review</button>
             
             <!-- ✅ Place Bid Button -->
             <button id="placeBidButton" class="placebid">Place Bid</button>
