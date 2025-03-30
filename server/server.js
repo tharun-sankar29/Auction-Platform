@@ -51,7 +51,7 @@ app.get('../profile.ejs.html', async (req, res) => {
       const deadData = await Dead.find({ seller_id: req.session.userId });
 
       const computeMaxBid = (auction) => {
-        let maxBid = 0;w
+        let maxBid = 0;
         auction.bids.forEach(bid => {
           if (bid.amount > maxBid) {
             maxBid = bid.amount;
