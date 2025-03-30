@@ -31,14 +31,15 @@ const auctionSchema = new mongoose.Schema({
             bid_time: { type: Date, default: Date.now }
         }
     ],
-    maxamount: Number
+    maxamount: Number,
+    status:  String
 });
 
 const deadSchema = new mongoose.Schema({
     title: String,
     description: String,
     img: String,
-    price: String,
+    price: Number,
     end_time: Date,
     bids: [
         {
