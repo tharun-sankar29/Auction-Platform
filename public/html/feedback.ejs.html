@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Feedbacks</title>
+        <link rel="stylesheet" href="/css/styles.css">
+    </head>
+    <style>
+        .Stars {
+            color: #f0c040;
+            font-size: 1.2rem;
+        }
+    </style>
+    <body>
+        <h1>Feedback & Reviews</h1>
+        <% if(feedback && feedback.feedbacks.length > 0) { %>
+           <% feedback.feedbacks.forEach(function(fd) { %>
+            <div class="Feed">
+            <p class="user">User id: <%= fd.user_id %></p>
+            <p class="rating">rating: <div class="Stars"> <%= fd.Stars %></div></p>
+            <p class="desc">Description: <%= fd.description %> </p>
+            <p class="time">Created at: <%= fd.createdAt.toLocaleString() %> </p>
+            </div>
+           <% }) %>
+       <% } else { %>
+        <h1 class="noFd">No FeedBacks availabe</h1>
+       }
+    </body>
+</html>

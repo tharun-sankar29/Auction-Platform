@@ -6,7 +6,7 @@ const session = require('express-session');
 
 const app = express();
 
-const { User, Auction, Product, Dead } = require('./schema/schema');
+const { User, Auction, Product, Dead,} = require('./schema/schema');
 
 //session initialization
 // ejs view
@@ -70,13 +70,36 @@ app.get('../profile.ejs.html', async (req, res) => {
         user: userData, 
         soldProduct: soldData, 
         auction: activeAuctions, 
-        Deadauction: deadData 
+        Deadauction: deadData,
       });
     } catch (err) {
       console.error(err);
       res.status(500).send('Server error');
     }
   });
+
+app.get('../feedback.ejs.html', async (req,res) => {
+    try {
+        feedbackData = await Auction.findById(auction_id).populate('feedbacks.user_id'); // req.params.id - getting auction Id from link
+        // .populate(id) - replace feedback id with userid
+        feedbackData.feedbacks.forEach( fd => {
+            let stars='';
+            switch (fd.rating) {
+                case 1: stars = '★'; break;
+                case 2: stars = '★★'; break;
+                case 3: stars = '★★★'; break;
+                case 4: stars = '★★★★'; break;
+                case 5: stars = '★★★★★'; break;
+            }
+            fd.Stars = stars;
+        })
+        res.render('../feedback.ejs.html', {
+            feedback: feedbackData
+        })
+    } catch (err) {
+        console.error(err)
+    }
+});
 
 //import all routings...
 const authRoutes = require('./authRouting');

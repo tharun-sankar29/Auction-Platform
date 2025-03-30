@@ -32,7 +32,16 @@ const auctionSchema = new mongoose.Schema({
         }
     ],
     maxamount: Number,
-    status:  String
+    status:  String,
+    feedbacks: [
+        {
+        user_id: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+        rating: {type: Number, min: 1, max: 5},
+        Stars: String,
+        description: String,
+        createdAt: {type: Date, default: Date.now }
+        }
+    ]
 });
 
 const deadSchema = new mongoose.Schema({
@@ -53,11 +62,11 @@ const deadSchema = new mongoose.Schema({
 
 
 const User = mongoose.model('User', UserSchema);
-const Products = mongoose.model('Product', ProductSchema);
-const Auctions = mongoose.model('Auction', auctionSchema);
+const Product = mongoose.model('Product', ProductSchema);
+const Auction = mongoose.model('Auction', auctionSchema);
 const Dead = mongoose.model('Dead', deadSchema);
 ;
 
 
 
-module.exports = {User, Products, Auctions, Dead};
+module.exports = {User, Product, Auction, Dead};
