@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/styles.css">
     <title>Payment</title>
+    <link rel="stylesheet" href="/css/styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
       $(document).ready(function() {
@@ -16,26 +16,28 @@
           $(".dispGpay").show();
           $(".dispNet").hide();
           clearNetInputs();
+          $("#payment_method").val("Gpay");
           checkDetails();
         });
- 
+
         $(".net").click(function() {
           $(".dispNet").show();
           $(".dispGpay").hide();
           clearGpayInputs();
+          $("#payment_method").val("Net");
           checkDetails();
         });
 
         function clearGpayInputs() {
           $("#email").val('');
           $("#ID").val('');
-          $("#amt").val('');
+          $("#amt").val('<%= amount %>');
         }
 
         function clearNetInputs() {
           $("#netUser").val('');
           $("#netPass").val('');
-          $("#netAmt").val('');
+          $("#netAmt").val('<%= amount %>');
         }
 
         function checkDetails(){
@@ -69,7 +71,13 @@
     </script>
   </head>
   <body>
+<<<<<<< HEAD
     <form action="/auth/payment" method="post">
+=======
+    <h1>Make Payment</h1>
+    <form action="/payment" method="post">
+      <input type="hidden" name="deadId" value="<%= deadId %>">
+>>>>>>> cdb7ef3892c7eb5c0aa918d0cae9ac06b8bb9d86
       <div class="pay">
         <p class="gpay" style="cursor:pointer;">Pay via Gpay</p>
         <div class="dispGpay">
@@ -78,7 +86,7 @@
           <label for="ID">Enter ID</label>
           <input type="number" name="ID" id="ID">
           <label for="amt">Amount</label>
-          <input type="number" step="0.01" name="amt" id="amt">
+          <input type="number" step="0.01" name="amt" id="amt" value="<%= amount %>">
         </div>
   
         <p class="net" style="cursor:pointer;">Pay via Net Banking</p>
@@ -90,15 +98,15 @@
             <option value="Bank of Baroda">Bank of Baroda</option>
             <option value="Axis Bank">Axis Bank</option>
           </select>
-    
           <label for="netUser">User ID</label>
           <input type="text" name="netUser" id="netUser">
           <label for="netPass">Password</label>
           <input type="password" name="netPass" id="netPass">
           <label for="netAmt">Amount</label>
-          <input type="number" step="0.01" name="netAmt" id="netAmt">
+          <input type="number" step="0.01" name="netAmt" id="netAmt" value="<%= amount %>">
         </div>
       </div>
+      <input type="hidden" name="payment_method" value="" id="payment_method">
       <button type="submit" id="paymentBtn">Make Payment</button>
     </form>
   </body>

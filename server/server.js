@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 
 
-app.get('../feedback.ejs.html', async (req,res) => {
+app.get('../feedback.ejs', async (req,res) => {
     try {
         feedbackData = await Auction.findById(auction_id).populate('feedbacks.user_id'); // req.params.id - getting auction Id from link
         // .populate(id) - replace feedback id with userid
@@ -41,7 +41,7 @@ app.get('../feedback.ejs.html', async (req,res) => {
             }
             fd.Stars = stars;
         })
-        res.render('../feedback.ejs.html', {
+        res.render('../feedback.ejs', {
             feedback: feedbackData
         })
     } catch (err) {
@@ -49,14 +49,14 @@ app.get('../feedback.ejs.html', async (req,res) => {
     }
 });
 
-app.get('../payment.ejs.html', async (req, res) => {
+app.get('../payment.ejs', async (req, res) => {
   try {
     const deadData = await Dead.findById(req.params.deadId);
     if (!deadData) {
       return res.status(404).send("Dead auction not found.");
     }
   
-    res.render('../payment.ejs.html', { amount: deadData.maxamount, deadId: deadData._id });
+    res.render('../payment.ejs', { amount: deadData.maxamount, deadId: deadData._id });
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error.");
@@ -73,7 +73,7 @@ app.post('/payment', async (req, res) => {
       user_id: userId,
       dead_id: deadId, 
       payment_status: 'Pending', 
-      amount: amt 
+      amount: amount
     });
     await newPayment.save();
 
