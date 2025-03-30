@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const mongoose = require('mongoose');
+const session = require('express-session');
 
 
 //import all routings...
@@ -13,14 +14,36 @@ const app = express();
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(session({
+    secret: 'auction_secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {secure : false,
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24
+    }
+}));
+
+const authMiddleware = (req, res, next) => {
+    if (req.session.user_id) {
+        next();
+    } else {
+        res.status(401).json({ message: 'Session expired, please login' });
+    }
+};
+
+module.exports = authMiddleware;
+
 //set routing address..
 app.use('/auth', authRoutes);
-app.use('/auctions', auctionRoutes);
+app.use('/auctions', auctionRoutes, authMiddleware);
 
 // Serve static files from multiple folders
 
 app.use(express.static(path.join(__dirname, '../public')));
 app.use('/', express.static(path.join(__dirname, '../public/html')));
+
+
 
 // Catch-all route to serve HTML files with query parameters
 app.get('/:file', (req, res) => {

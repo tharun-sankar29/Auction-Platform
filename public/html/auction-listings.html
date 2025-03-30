@@ -38,6 +38,19 @@
 
     <script src="/js/auction-fetch.js"></script>
     <script>
+        window.onload = async () => {
+            try {
+                const response = await fetch('/auth/session');
+
+                if(!response.ok) {
+                    alert('You must be logged in to access this feaature...');
+                    window.location.href = 'loginAndRegister.html';
+                }
+            } catch (err) {
+                console.error('Failed to verify session.')
+                window.location.href = 'loginAndRegister.html';
+            }
+        }
         document.addEventListener('DOMContentLoaded', () => {
             fetchAuctions();
         })

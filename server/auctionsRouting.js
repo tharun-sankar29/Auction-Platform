@@ -3,6 +3,7 @@ const router = express.Router();
 const {Auctions} = require('./schema/schema');
 const mongoose = require('mongoose');
 
+
 router.get('/all', async (req, res) => {
     try {
         const auctions = await Auctions.find();
@@ -30,9 +31,13 @@ router.get('/:id', async (req, res) => {
 })
 
 router.post('/:id/bid', async (req, res) => {
-    const {user_id, amount} = req.body;
 
     try {
+
+        const user_id = req.session.user_id;
+        const amount = req.body.amount;
+
+
         const auction = await Auctions.findById(req.params.id);
 
         if(!auction) {
