@@ -25,7 +25,7 @@ const productModel = mongoose.model('Products', productSchema);
 
 app.post('/proDet', async (req, res) => {
     const {
-        'product-id': product_id,
+        'product-id': product_id, 
         'seller-id': seller_id,
         catogary,
         name,

@@ -1,3 +1,32 @@
+const session = require('express-session');
+const { User } = require('../../server/schema/schema');
+
+//session initialization
+app.use(session ({
+    secret: 'User',
+    resave: false,
+    saveUninitialized: true
+}));
+
+//storing user id in session
+app.post('/auth/login', async (req, res) => {
+    const {email, password} = req.body;
+    const user = await User.findOne({ email });
+    if (user && user.password === password) {
+        req.session.userId = user._id;
+    }
+})
+//finding that particular user data from mongoose
+app.get('/public/html/profile.ejs.html', async (req,res) => {
+    if(!req.session.userId) res.json('No such user');
+    else {
+        const userData = await User.findById(req.session.userId);
+        res.render('/public/html/profile.ejs.html', {user: userData}); //user acts as object in profile.ejs.html
+    }
+})
+//set up ejs view
+app.set('view engine', 'ejs');
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const SignInForm = document.getElementById('sign-in-form');

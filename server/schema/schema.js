@@ -5,9 +5,8 @@ const UserSchema = new mongoose.Schema({
     email : String,
     password : String
 });
-
+//removed user define Id
 const ProductSchema = new mongoose.Schema({
-  _id: String,
   img: String,        
   Name: String,
   price: Number,
