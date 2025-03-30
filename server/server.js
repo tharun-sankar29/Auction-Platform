@@ -73,7 +73,7 @@ app.post('/payment', async (req, res) => {
       user_id: userId,
       dead_id: deadId, 
       payment_status: 'Pending', 
-      amount: amt 
+      amount: amount
     });
     await newPayment.save();
 
