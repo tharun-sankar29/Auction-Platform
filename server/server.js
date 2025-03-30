@@ -4,7 +4,9 @@ const path = require('path');
 const mongoose = require('mongoose');
 const session = require('express-session');
 
-const { User, Auction, Product, Dead } = require('../../server/schema/schema');
+const app = express();
+
+const { User, Auction, Product, Dead } = require('./schema/schema');
 
 //session initialization
 // ejs view
@@ -81,7 +83,6 @@ const authRoutes = require('./authRouting');
 const auctionRoutes = require('./auctionsRouting');
 
 
-const app = express();
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
