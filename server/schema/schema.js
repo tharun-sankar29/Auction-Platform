@@ -68,7 +68,6 @@ const PaymentSchema = new mongoose.Schema({
 });
 
 
-
 const User = mongoose.model('User', UserSchema);
 const Product = mongoose.model('Product', ProductSchema);
 const Auction = mongoose.model('Auction', auctionSchema);

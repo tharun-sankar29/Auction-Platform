@@ -80,6 +80,39 @@ router.post('/:id/bid', async (req, res) => {
     }
 });
 
+router.post(':id/review', async (req, res) => {
+    const user_id = req.session.user_id;
+    const auction_id = req.params.id;
+
+    const {rating, Stars, description, createdAt} = req.body;
+
+    try {
+        if (!req.session.user_id) {
+            alert('Session expired please login...');
+            window.location.href = 'loginAndRegister.html';
+        }
+    } catch (err) {
+        console.error("Error validating session: " + err);
+    }
+
+    try {
+        const auction = await Auctions.findById(auction_id);
+        auction.feedbacks.push({
+            user_id: new mongoose.Types.ObjectId(user_id),
+            rating,
+            Stars,
+            description,
+            createdAt
+        });
+
+        await auction.save();
+
+    } catch (err) {
+        console.log('Error posting a review: ' + err);
+        res.status(500).json({error : 'Failed to submit review'});
+    }
+})
+
 
 
 module.exports = router;
