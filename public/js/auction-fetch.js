@@ -1,9 +1,7 @@
-const fetchAuctions = async () => {
+const fetchAuctions = async (auction_type) => {
     try {
-        const response = await fetch('/auctions/all');
-        if (!response.ok) {
-            throw new Error('Failed to fetch auctions');
-        }
+        const end_point = auction_type === "all" ? '/auctions/all' : '/auctions/featured';
+        const response = await fetch(end_point);
 
         const auctions = await response.json();
         const container = document.getElementById('auction-container');

@@ -17,6 +17,18 @@ router.get('/all', async (req, res) => {
     }
 });
 
+router.get('/featured', async (req, res) => {
+    try {
+        const featuredAuctions = await Auctions.find({"bids.5" : {"$exists" : true}});
+        res.status(200).json(featuredAuctions);
+
+    } catch (err) {
+        console.error('Error fetching featured auctions:' + err);
+        res.status(500).json({message : 'Server Error Failed to fetch auctions...'})
+    }
+
+})
+
 router.get('/:id', async (req, res) => {
     console.log('Receive id: ' + req.params.id);
     try {
