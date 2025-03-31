@@ -64,6 +64,7 @@
             $("#paymentBtn").prop('disabled', true);
           }
         }
+
         $("input, select").on("input change", function() {
           checkDetails();
         });
@@ -71,13 +72,9 @@
     </script>
   </head>
   <body>
-<<<<<<< HEAD
-    <form action="/auth/payment" method="post">
-=======
     <h1>Make Payment</h1>
     <form action="/payment" method="post">
       <input type="hidden" name="deadId" value="<%= deadId %>">
->>>>>>> cdb7ef3892c7eb5c0aa918d0cae9ac06b8bb9d86
       <div class="pay">
         <p class="gpay" style="cursor:pointer;">Pay via Gpay</p>
         <div class="dispGpay">

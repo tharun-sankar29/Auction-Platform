@@ -120,17 +120,27 @@ router.post('/payment', async (req, res) => {
 });
 
 router.get('/paymentPage', async (req, res) => {
-  try {
-    const deadData = await Dead.findById(req.params.deadId);
-    if (!deadData) {
-      return res.status(404).send("Dead auction not found.");
-    }
+    try {
+      const { deadId } = req.query;  // Retrieve the deadId from query params
   
-    res.render('/payment', { amount: deadData.maxamount, deadId: deadData._id });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server error.");
-  }
-});
+      // Check if deadId is provided
+      if (!deadId) {
+        return res.status(400).send("Missing deadId parameter.");
+      }
+  
+      // Fetch the auction data from your database based on deadId
+      const deadData = await Dead.findById(deadId);
+      if (!deadData) {
+        return res.status(404).send("Dead auction not found.");
+      }
+  
+      // Pass amount and deadId to the EJS template
+      res.render('payment', { amount: deadData.maxamount, deadId: deadData._id });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Server error.");
+    }
+  });
+  
 
 module.exports = router;
