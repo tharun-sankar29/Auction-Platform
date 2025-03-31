@@ -19,13 +19,6 @@ nav {
     
 }
 
-nav i {
-    border: 1px solid #000;
-    border-radius: 50%;
-    justify-content: flex-end;
-    font-size: 25px;
-}
-
 main {
     flex: 1;
     margin-left: 30px;

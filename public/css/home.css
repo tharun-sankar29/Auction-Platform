@@ -39,6 +39,7 @@ header i {
     display: flex;
     gap: 15px;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .menu-item {

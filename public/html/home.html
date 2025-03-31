@@ -10,7 +10,7 @@
 <body>
     <header>
         <h1>Welcome to the Auction Platform</h1>
-        <i class="fa-solid fa-user"></i>
+        <i id="profile-icon" class="fa-solid fa-user"></i>
     </header>
     <main>
         <section>
@@ -40,6 +40,24 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             renderAuctions('featured');
+            
+            const profileIcon = document.getElementById("profile-icon");
+            profileIcon.addEventListener('click', async () => {
+                try {
+                    const res = await fetch('/auth/session');
+                    if (!res.ok) {
+                        alert('Please Login to view profile..')
+                        window.location.href = 'loginAndRegister.html';
+                    } else {
+                        window.location.href = '/auth/profile';
+                    }
+                } catch (err) {
+                    console.error('Error opening profile: ' + err);
+                    alert('Something Went Wrong Please try again later...')
+                }
+                
+                
+            })
         });
     </script>
 </body>
