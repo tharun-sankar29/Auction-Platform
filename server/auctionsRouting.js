@@ -5,6 +5,18 @@ const mongoose = require('mongoose');
 
 const Auctions = Auction;
 
+const validateSession = async (req, res) => { 
+    const user_id = req.session.user_id;
+
+    if(user_id) {
+        return true;
+    } else {
+        alert('Session Expired Please login..');
+        window.href.location = 'loginAndRegister.html';
+    }
+    return false;
+}
+
 
 router.get('/all', async (req, res) => {
     try {
@@ -113,6 +125,24 @@ router.post(':id/review', async (req, res) => {
     }
 })
 
+
+router.post('/add_auction', async (req, res) => {
+    isSessionValid = validateSession(req, res);
+
+    if (isSessionValid) {
+        try {
+            const newAuction = req.body;
+            const Auction = new Auctions(newAuction);
+            await Auction.save()
+        } catch (err) {
+            console.error("Error adding new auction:" + err);
+            res.status(500).json({message: 'Failed to add new auction'});
+        }
+
+    } else {
+        return;
+    }
+});
 
 
 module.exports = router;
