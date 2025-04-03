@@ -25,7 +25,7 @@ app.use(session({
 }));
 
 app.use(express.static(path.join(__dirname, '../public')));
-
+//update
 app.put('/auction/:id', async (req, res) => {
   try {
     await Auction.findByIdAndUpdate(req.params.id, req.body);
@@ -35,7 +35,7 @@ app.put('/auction/:id', async (req, res) => {
   }
 });
 
-
+//delete
 app.delete('/auction/:id', async (req,res) => {
   try {
     await Auction.findByIdAndDelete(req.params.id);
