@@ -3,8 +3,10 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const methodOverride = require('method-override');
 
 const app = express();
+app.use(methodOverride('_method'));
 
 const { User, Auction, Product, Dead, Payment} = require('./schema/schema');
 
@@ -15,7 +17,7 @@ app.set('views', path.join(__dirname, '../public/html'));
 
 // Middleware
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));w
 app.use(session({
   secret: 'auction_secret',
   resave: false,
@@ -24,8 +26,23 @@ app.use(session({
 
 app.use(express.static(path.join(__dirname, '../public')));
 
+app.put('/auction/:id', async (req, res) => {
+  try {
+    await Auction.findByIdAndUpdate(req.params.id, req.body);
+    res.redirect('seller.html');
+  } catch (err) {
+    res.status(500).send("Error updating auction: " + err);
+  }
+});
 
 
+app.delete('/auction/:id', async (req,res) => {
+  try {
+    await Auction.findByIdAndDelete(req.params.id);
+  } catch (err) {
+    res.send("Error: ",err);
+  }
+})
 app.get('../feedback.ejs', async (req,res) => {
     try {
         feedbackData = await Auction.findById(auction_id).populate('feedbacks.user_id'); // req.params.id - getting auction Id from link

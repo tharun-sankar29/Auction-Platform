@@ -19,6 +19,12 @@
                           <h3 class="name"><%= product.title || product.name %></h3>
                           <p>Price: <%= product.price %></p>
                           <p>Sold Price: <%= product.maxamount ? product.maxamount : "N/A" %></p>
+                          <form action="/auction/<%= product._id %> method=PUT" method="post">
+                          <button type="submit" id="upt-auction">Update Auction</button>
+                          </form>
+                          <form action="/auction/<%= product._id %> method=DELETE" method="post" onsubmit=" return confirm('Do you want to delete the auction');">
+                          <button type="submit" id="dlt-auction">Delete Auction</button>
+                          </form>
                       </div>
                   <% }); %>
               <% } else { %>
