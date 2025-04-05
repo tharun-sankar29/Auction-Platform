@@ -23,11 +23,15 @@ const fetchAuctions = async (auction_type) => {
 
             auctionElement.innerHTML = `
                 <h2 class="auction-item-title">${auction.title}</h2>
-                <img src="${auction.img}" alt="${auction.title}" style="width: 100%; max-height: 300px;">
-                <p>${auction.description}</p>
-                <p>Starting Price: $${auction.price}</p>
-                <p>Current Price: $${currentPrice}</p>
-                <p>Ends: ${new Date(auction.end_time).toLocaleString()}</p>
+                <div class="image-container">
+                    <img class="auction-image" src="${auction.img}" alt="${auction.title}">
+                </div>
+                <div class="auction-description">
+                    <p>${auction.description}</p>
+                    <p>Starting Price: $${auction.price}</p>
+                    <p>Current Price: $${currentPrice}</p>
+                    <p>Ends: ${new Date(auction.end_time).toLocaleString()}</p>
+                </div>
                 <button class="view-details-btn" onclick="window.location.href='item-details.html?id=${auction._id}'">View Details</button>
             `;
 
