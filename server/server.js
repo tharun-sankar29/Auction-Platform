@@ -17,7 +17,7 @@ app.set('views', path.join(__dirname, '../public/html'));
 
 // Middleware
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));w
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
   secret: 'auction_secret',
   resave: false,

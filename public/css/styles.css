@@ -54,7 +54,7 @@ main {
     margin: 30px;
 }
 
-footer {
+footer p{
     background: linear-gradient(135deg, #4caf50, #2e7d32);
     color: white;
     padding: 15px;
