@@ -2,8 +2,23 @@ const express = require('express');
 const router = express.Router();
 const {Auction} = require('./schema/schema');
 const mongoose = require('mongoose');
+const multer = require('multer');
+const path = require('path');
 
 const Auctions = Auction;
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, path.join(__dirname, '../public/images/auction-items'));
+    },
+    filename: (req, file, cb) => {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+      const ext = path.extname(file.originalname);
+      cb(null, file.fieldname + '-' + uniqueSuffix + ext);
+    }
+});
+
+const upload = multer({ storage });
 
 const validateSession = async (req, res) => { 
     const user_id = req.session.user_id;
@@ -16,6 +31,8 @@ const validateSession = async (req, res) => {
     }
     return false;
 }
+
+
 
 
 router.get('/all', async (req, res) => {
@@ -126,23 +143,42 @@ router.post(':id/review', async (req, res) => {
 })
 
 
-router.post('/add_auction', async (req, res) => {
-    isSessionValid = validateSession(req, res);
+router.post('/add', upload.single('image-upload'), async (req, res) => {
+    const isSessionValid = validateSession(req, res);
 
-    if (isSessionValid) {
-        try {
-            const newAuction = req.body;
-            const Auction = new Auctions(newAuction);
-            await Auction.save()
-        } catch (err) {
-            console.error("Error adding new auction:" + err);
-            res.status(500).json({message: 'Failed to add new auction'});
-        }
+    if (!isSessionValid) return;
 
-    } else {
-        return;
+    try {
+        const {
+            name,
+            category,
+            price,
+            description,
+            startTime,
+            endTime,
+            'image-url': imageUrl
+        } = req.body;
+
+        const imageFile = req.file ? `/uploads/${req.file.filename}` : null;
+
+        const newAuction = new Auctions({
+            name,
+            category,
+            price,
+            description,
+            startTime,
+            endTime,
+            image: imageUrl || imageFile // Use URL if provided, else file path
+        });
+
+        await newAuction.save();
+
+        res.status(201).json({ message: 'Auction added successfully' });
+
+    } catch (err) {
+        console.error("Error adding new auction:", err);
+        res.status(500).json({ message: 'Failed to add new auction' });
     }
 });
-
 
 module.exports = router;

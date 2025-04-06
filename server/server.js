@@ -101,7 +101,7 @@ app.post('/payment', async (req, res) => {
   }
 });
 
-//import all routings...
+
 const authRoutes = require('./authRouting');
 const auctionRoutes = require('./auctionsRouting');
 

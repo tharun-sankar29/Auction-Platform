@@ -46,6 +46,7 @@
                 if(!response.ok) {
                     alert('You must be logged in to access this feaature...');
                     window.location.href = 'loginAndRegister.html';
+                    return;
                 }
             } catch (err) {
                 console.error('Failed to verify session.')
