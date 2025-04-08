@@ -5,20 +5,12 @@ const UserSchema = new mongoose.Schema({
     email : String,
     password : String
 });
-//removed user define Id , Name to name
-const ProductSchema = new mongoose.Schema({
-  img: String,        
-  name: String,
-  price: Number,
-  Description: String,
-  Start: Date,
-  End: Date,
-  status: String
-});
+
 
 const auctionSchema = new mongoose.Schema({
     title: String,                    // Product title
-    description: String,              // Product description
+    description: String, 
+    category: String,             // Product description
     img: String,                      // Image path
     start_time: Date,                 // Auction start time
     end_time: Date,                   // Auction end time
@@ -31,8 +23,6 @@ const auctionSchema = new mongoose.Schema({
             bid_time: { type: Date, default: Date.now }
         }
     ],
-    maxamount: Number,
-    status:  String,
     feedbacks: [
         {
         user_id: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
@@ -69,7 +59,6 @@ const PaymentSchema = new mongoose.Schema({
 
 
 const User = mongoose.model('User', UserSchema);
-const Product = mongoose.model('Product', ProductSchema);
 const Auction = mongoose.model('Auction', auctionSchema);
 const Dead = mongoose.model('Dead', deadSchema);
 const Payment = mongoose.model('Payment', PaymentSchema);
@@ -77,4 +66,4 @@ const Payment = mongoose.model('Payment', PaymentSchema);
 
 
 
-module.exports = {User, Product, Auction, Dead, Payment};
+module.exports = {User, Auction, Dead, Payment};

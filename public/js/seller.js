@@ -83,10 +83,36 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       });
   
-      productForm.addEventListener('submit', (event) => {
+      productForm.addEventListener('submit', async (event) => {
         event.preventDefault();
-        if (validateProduct()) {
-          productForm.submit();
+      
+        if (!validateProduct()) {
+          return;
+        }
+      
+        const formData = new FormData(productForm);
+      
+        try {
+          const resp = await fetch('/auctions/add', {
+            method: 'POST',
+            body: formData
+          });
+      
+          if (resp.status === 201) {
+            alert('New product has been added successfully');
+            productForm.reset();
+
+          } else if (resp.status === 401) {
+            alert('Session expired. Please log in again.');
+            window.location.href = '/loginAndRegister.html';
+            
+          } else {
+            alert('Something went wrong. Please try again later.');
           }
-    });
+        } catch (err) {
+          console.error(err);
+          alert('An error occurred while submitting the form.');
+        }
+      });
+      
 })

@@ -26,8 +26,7 @@ const validateSession = async (req, res) => {
     if(user_id) {
         return true;
     } else {
-        alert('Session Expired Please login..');
-        window.href.location = 'loginAndRegister.html';
+        console.log('invalid session:');
     }
     return false;
 }
@@ -115,14 +114,7 @@ router.post(':id/review', async (req, res) => {
 
     const {rating, Stars, description, createdAt} = req.body;
 
-    try {
-        if (!req.session.user_id) {
-            alert('Session expired please login...');
-            window.location.href = 'loginAndRegister.html';
-        }
-    } catch (err) {
-        console.error("Error validating session: " + err);
-    }
+    validateSession(req, res);
 
     try {
         const auction = await Auctions.findById(auction_id);
@@ -145,40 +137,51 @@ router.post(':id/review', async (req, res) => {
 
 router.post('/add', upload.single('image-upload'), async (req, res) => {
     const isSessionValid = validateSession(req, res);
-
     if (!isSessionValid) return;
-
+  
     try {
-        const {
-            name,
-            category,
-            price,
-            description,
-            startTime,
-            endTime,
-            'image-url': imageUrl
-        } = req.body;
-
-        const imageFile = req.file ? `/uploads/${req.file.filename}` : null;
-
-        const newAuction = new Auctions({
-            name,
-            category,
-            price,
-            description,
-            startTime,
-            endTime,
-            image: imageUrl || imageFile // Use URL if provided, else file path
-        });
-
-        await newAuction.save();
-
-        res.status(201).json({ message: 'Auction added successfully' });
-
+      const {
+        name,
+        category,
+        price,
+        description,
+        'start-time': startTime,
+        'end-time': endTime,
+        'image-url': imageUrl
+      } = req.body;
+  
+      const parsedStartTime = new Date(startTime);
+      const parsedEndTime = new Date(endTime);
+  
+      if (isNaN(parsedStartTime) || isNaN(parsedEndTime)) {
+        return res.status(400).json({ message: 'Invalid start or end time' });
+      }
+  
+      const imageFile = req.file ? `/images/${req.file.filename}` : null;
+  
+      const newAuction = new Auctions({
+        title: name,
+        description,
+        category,
+        img: imageUrl || imageFile,
+        start_time: parsedStartTime,
+        end_time: parsedEndTime,
+        price: Number(price),
+        seller_id: req.session.userId, 
+        bids: [],
+        feedbacks: []
+      });
+  
+      await newAuction.save();
+  
+      res.status(201).json({ message: 'Auction added successfully' });
+  
     } catch (err) {
-        console.error("Error adding new auction:", err);
-        res.status(500).json({ message: 'Failed to add new auction' });
+      console.error("Error adding new auction:", err);
+      res.status(500).json({ message: 'Failed to add new auction' });
     }
-});
+  });
+  
+
 
 module.exports = router;
