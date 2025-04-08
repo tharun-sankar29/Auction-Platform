@@ -8,17 +8,16 @@ const path = require('path');
 const Auctions = Auction;
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, path.join(__dirname, '../public/images/auction-items'));
+    destination: function (req, file, cb) {
+      cb(null, 'public/images/auction-items');
     },
-    filename: (req, file, cb) => {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-      const ext = path.extname(file.originalname);
-      cb(null, file.fieldname + '-' + uniqueSuffix + ext);
+    filename: function (req, file, cb) {
+      const uniqueName = Date.now() + path.extname(file.originalname);
+      cb(null, uniqueName);
     }
-});
-
-const upload = multer({ storage });
+  });
+  
+  const upload = multer({ storage });;
 
 const validateSession = async (req, res) => { 
     const user_id = req.session.user_id;
@@ -135,7 +134,9 @@ router.post(':id/review', async (req, res) => {
 })
 
 
-router.post('/add', upload.single('image-upload'), async (req, res) => {
+
+  
+  router.post('/add', upload.single('image-upload'), async (req, res) => {
     const isSessionValid = validateSession(req, res);
     if (!isSessionValid) return;
   
@@ -146,8 +147,7 @@ router.post('/add', upload.single('image-upload'), async (req, res) => {
         price,
         description,
         'start-time': startTime,
-        'end-time': endTime,
-        'image-url': imageUrl
+        'end-time': endTime
       } = req.body;
   
       const parsedStartTime = new Date(startTime);
@@ -157,17 +157,17 @@ router.post('/add', upload.single('image-upload'), async (req, res) => {
         return res.status(400).json({ message: 'Invalid start or end time' });
       }
   
-      const imageFile = req.file ? `/images/${req.file.filename}` : null;
+      const imageFile = req.file ? `/images/auction-items/${req.file.filename}` : null;
   
       const newAuction = new Auctions({
         title: name,
         description,
         category,
-        img: imageUrl || imageFile,
+        img: imageFile,
         start_time: parsedStartTime,
         end_time: parsedEndTime,
         price: Number(price),
-        seller_id: req.session.userId, 
+        seller_id: req.session.userId,
         bids: [],
         feedbacks: []
       });

@@ -8,67 +8,75 @@ window.renderProductPage = async function(auction_id) {
 
         // ✅ Render auction data including the "Place Bid" button
         productContainer.innerHTML = `
-            <h2>${auction.title}</h2>
-            <img src="${auction.img}" alt="${auction.title}" style="width: 100%; max-height: 300px;">
-            <p id="currentBid">Current Bid: $${auction.bids.length > 0 
-                ? Math.max(...auction.bids.map(bid => bid.amount)) 
-                : auction.price}</p>
-            <p>Time Left: <span id="timeLeft"></span></p>
-            <button class="add-review" onclick="window.location.href='review.html?id=${auction._id}'">Add Review</button>
-            <button class="view-review" onclick="window.location.href='feedback.ejs.html?id=${auction._id}'">View Review</button>
-            <button id="placeBidButton" class="placebid">Place Bid</button>
-        `;
+        <h2>${auction.title}</h2>
+        <img src="${auction.img}" alt="${auction.title}" style="width: 100%; max-height: 300px;">
+        <p id="currentBid">Current Bid: $${auction.bids.length > 0 
+            ? Math.max(...auction.bids.map(bid => bid.amount)) 
+            : auction.price}</p>
+        <p id="timeLeft"></p> <!-- 👈 Changed this line -->
+        <button class="add-review" onclick="window.location.href='review.html?id=${auction._id}'">Add Review</button>
+        <button class="view-review" onclick="window.location.href='feedback.ejs.html?id=${auction._id}'">View Review</button>
+        <button id="placeBidButton" class="placebid">Place Bid</button>
+    `;
+    
 
-        // ✅ Timer Countdown
+        // ✅ Timer Countdown with Start/End checks
+        const startTime = new Date(auction.start_time).getTime();
         const endTime = new Date(auction.end_time).getTime();
         const timeLeftElement = document.getElementById('timeLeft');
+        const placeBidButton = document.getElementById('placeBidButton');
 
         const timer = setInterval(() => {
             const now = Date.now();
-            const diff = endTime - now;
 
-            if (diff <= 0) {
+            if (now < startTime) {
+                const diff = startTime - now;
+                timeLeftElement.textContent = `Auction starts in: ${getTimeLeft(diff)}`;
+                placeBidButton.disabled = true;
+                placeBidButton.textContent = "Auction Not Started";
+            } else if (now >= startTime && now < endTime) {
+                const diff = endTime - now;
+                timeLeftElement.textContent = `Time left: ${getTimeLeft(diff)}`;
+                placeBidButton.disabled = false;
+                placeBidButton.textContent = "Place Bid";
+            } else {
                 timeLeftElement.textContent = 'Bid ended';
+                placeBidButton.disabled = true;
+                placeBidButton.textContent = "Auction Ended";
                 clearInterval(timer);
-                return;
             }
-
-            timeLeftElement.textContent = getTimeLeft(diff);
         }, 1000);
 
-        // ✅ Modal Controls
-// ✅ Add AFTER productContainer.innerHTML = `...` block
+        // ✅ Modal Controls (with delay to wait for DOM to update)
+        setTimeout(() => {
+            const bidModal = document.getElementById('bidModal');
+            const closeButton = bidModal.querySelector('.close');
+            const submitBidButton = document.getElementById('submitBid');
 
-setTimeout(() => {
-    const bidModal = document.getElementById('bidModal');
-    const placeBidButton = document.getElementById('placeBidButton');
-    const closeButton = bidModal.querySelector('.close');
-    const submitBidButton = document.getElementById('submitBid');
+            document.addEventListener('click', (e) => {
+                if (e.target && e.target.id === 'placeBidButton') {
+                    if (!placeBidButton.disabled) {
+                        bidModal.style.display = 'flex';
+                    }
+                }
+            });
 
-    // If button exists, attach events
-    document.addEventListener('click', (e) => {
-        if (e.target && e.target.id === 'placeBidButton') {
-            bidModal.style.display = 'flex';
-        }
-    });
-    
+            if (closeButton) {
+                closeButton.onclick = () => {
+                    bidModal.style.display = 'none';
+                };
+            }
 
-    if (closeButton) {
-        closeButton.onclick = () => {
-            bidModal.style.display = 'none';
-        };
-    }
-
-    if (submitBidButton) {
-        submitBidButton.onclick = () => submitBid(auction);
-    }
-}, 5);
-
+            if (submitBidButton) {
+                submitBidButton.onclick = () => submitBid(auction);
+            }
+        }, 5);
 
     } catch (error) {
         console.error('Error loading auction:', error);
     }
 };
+
 
 function getTimeLeft(ms) {
     const h = Math.floor(ms / (1000 * 60 * 60));
@@ -79,41 +87,38 @@ function getTimeLeft(ms) {
 
 async function submitBid(auction) {
     const bidAmount = parseFloat(document.getElementById('bidAmount').value);
+
     const highestBid = auction.bids.length > 0
         ? Math.max(...auction.bids.map(bid => bid.amount))
         : auction.price;
 
+    if (isNaN(bidAmount)) {
+        alert('Please enter a valid bid amount.');
+        return;
+    }
+
     if (bidAmount <= highestBid) {
-        alert('New bid must be higher than current bid.');
+        alert('Your bid must be higher than the current highest bid.');
         return;
     }
 
     try {
-        const sessionRes = await fetch('/auth/session');
-        if (!sessionRes.ok) {
-            alert('Session expired. Please log in.');
-            window.location.href = '/loginAndRegister.html';
-            return;
-        }
-
-        const { user_id } = await sessionRes.json();
-
-        const bidRes = await fetch(`/auctions/${auction._id}/bid`, {
+        const res = await fetch(`/auctions/${auction._id}/bid`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ user_id, amount: bidAmount })
+            body: JSON.stringify({ amount: bidAmount })
         });
 
-        if (bidRes.ok) {
+        if (res.ok) {
             alert('Bid placed successfully!');
             window.location.reload();
         } else {
-            const error = await bidRes.json();
-            alert(`Error: ${error.message}`);
+            const err = await res.json();
+            alert(`Error: ${err.message}`);
         }
 
-    } catch (err) {
-        console.error('Error submitting bid:', err);
-        alert('Something went wrong while placing bid.');
+    } catch (error) {
+        console.error('Error submitting bid:', error);
+        alert('Something went wrong. Please try again later.');
     }
 }
