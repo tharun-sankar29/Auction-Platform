@@ -33,18 +33,36 @@
           <!-- Active Auctions Section -->
           <div class="Bids">
             <h2>Active Auctions</h2>
-            <% if (auction.length > 0) { %>
-              <ul>
-                <% auction.forEach(function(item) { %>
-                  <li>
-                    <strong><%= item.title %></strong> - Current Bid: ₹<%= item.maxamount %>
-                  </li>
-                <% }); %>
-              </ul>
-            <% } else { %>
-              <p>No active auctions.</p>
-            <% } %>            
-          </div>
+
+<% if (auction && auction.length > 0) { %>
+    <div class="auction-list">
+        <% auction.forEach(auction => { %>
+            <div class="auction-card">
+                <h3><%= auction.title %></h3>
+                <p><strong>Description:</strong> <%= auction.description %></p>
+                <p><strong>Current Max Bid:</strong> ₹<%= auction.maxamount %></p>
+                <p><strong>End Time:</strong> <%= new Date(auction.end_time).toLocaleString() %></p>
+
+                <div class="auction-actions">
+                    <!-- Edit Button -->
+                    <form action="auctions/edit/<%= auction._id %>" method="GET" style="display:inline;">
+                        <button type="submit">Edit</button>
+                    </form>
+
+                    <!-- Delete Button -->
+                    <form action="auctions/delete/<%= auction._id %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this auction?');" style="display:inline;">
+                        <button type="submit" style="background-color: red; color: white;">Delete</button>
+                    </form>
+                </div>
+            </div>
+            <hr>
+        <% }); %>
+    </div>
+<% } else { %>
+    <p>No active auctions found.</p>
+<% } %>
+  
+          </div>          
 
           <!-- Won Auctions Awaiting Payment -->
           <div class="won-section">
