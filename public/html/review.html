@@ -15,9 +15,7 @@
     <!-- Review Submission Form -->
     <section class="review-form-section">
       <h2>Submit Your Review</h2>
-      <form class="review-form" action="/auctions/review">
-        <label for="username">Name:</label>
-        <input type="text" id="username" name="username" placeholder="Your Name" required />
+      <form class="review-form">
 
         <label for="rating">Rating:</label>
         <div class="rating">
@@ -45,34 +43,58 @@
     <p>&copy; 2025 Online Auction. All Rights Reserved.</p>
   </footer>
 
-  <script>
+<script>
+  window.onload = async () => {
+    try {
+      const res = await fetch('/auth/session');
 
-    window.onload = async () => {
-      try {
-        const res = await fetch('/auth/session');
-
-        if (!res.ok) {
-          alert('Session expired Please Login..');
-          window.location.href = 'loginAndRegister.html';
-        }
-      } catch (err) {
-        console.error('Error validting session:' + err);
+      if (!res.ok) {
+        alert('Session expired. Please log in.');
+        window.location.href = 'loginAndRegister.html';
       }
+    } catch (err) {
+      console.error('Error validating session:', err);
     }
+  }
 
-    
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelector('.review-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        urlparams = new URLSearchParams(window.location.search);
-        auctionId = urlparams.get('id');
-        console.log(auctionId);
-        alert("Thank you for your review, it has been submitted.");
-        window.location.href = "item-details.html?id=" + auctionId;
+  document.addEventListener('DOMContentLoaded', () => {
+  const form = document.querySelector('.review-form');
+
+  form.addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const stars = form.querySelector('input[name="rating"]:checked')?.value;
+    const description = form.querySelector('textarea[name="comment"]')?.value;
+    const createdAt = new Date().toISOString();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const auctionId = urlParams.get('id');
+
+    console.log('came here');
+
+    try {
+      const resp = await fetch(`/auctions/${auctionId}/review`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ Stars: stars, description, createdAt })
       });
-    })
 
+      const result = await resp.json();
 
-  </script>
+      if (resp.ok) {
+        alert("Thank you for your review!");
+        window.location.href = "item-details.html?id=" + auctionId;
+      } else {
+        alert("Error: " + result.error);
+      }
+
+    } catch (err) {
+      console.error("Failed to submit review:", err);
+      alert("Something went wrong while submitting the review.");
+    }
+  });
+});
+
+</script>
 </body>
 </html>

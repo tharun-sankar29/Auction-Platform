@@ -117,32 +117,42 @@ router.post('/:id/bid', async (req, res) => {
 });
 
 
-//add review on (auction_id)
-router.post(':id/review', async (req, res) => {
+router.post('/:id/review', async (req, res) => {
+    console.log('reached backend..');
     const user_id = req.session.user_id;
     const auction_id = req.params.id;
 
-    const {rating, Stars, description, createdAt} = req.body;
+    const {Stars, description, createdAt} = req.body;
 
     validateSession(req, res);
 
     try {
+        console.log('Finding auction by ID:', auction_id);
         const auction = await Auctions.findById(auction_id);
+    
+        if (!auction) {
+            return res.status(404).json({ error: 'Auction not found' });
+        }
+    
+        console.log('Pushing feedback...');
         auction.feedbacks.push({
             user_id: new mongoose.Types.ObjectId(user_id),
-            rating,
             Stars,
             description,
             createdAt
         });
-
+    
+        console.log('Saving auction...');
         await auction.save();
-
+    
+        console.log('Auction saved!');
+        res.status(200).json({ message: 'Review submitted successfully' });
+    
     } catch (err) {
-        console.log('Error posting a review: ' + err);
-        res.status(500).json({error : 'Failed to submit review'});
-    }
-})
+        console.error('Error posting a review:', err);
+        res.status(500).json({ error: 'Failed to submit review' });
+    }    
+});
 
 
 

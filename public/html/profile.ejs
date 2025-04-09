@@ -4,11 +4,15 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Profile</title>
+      <link rel="stylesheet" href="/css/profile.css">
       <link rel="stylesheet" href="/css/styles.css">
   </head>
   <body>
-      <h1><%= user.name %>'s Profile</h1> 
-      
+      <div class="top-container">
+        <i class="fa-solid fa-right-from-bracket" id="logout-icon"><span>Logout</span></i>
+        <h1><%= user.name %>'s Profile</h1>
+      </div>
+
       <div id="container">
           <div id="sold">
               <h2>Sold Products</h2>
@@ -66,5 +70,7 @@
             <% } %>
           </div>
       </div>
+      <script src="https://kit.fontawesome.com/10e51ef5e7.js" crossorigin="anonymous"></script>
   </body>
+  
 </html>
