@@ -17,7 +17,10 @@ const storage = multer.diskStorage({
     }
   });
   
-  const upload = multer({ storage });;
+const upload = multer({ storage });
+
+
+//Session Validation
 
 const validateSession = async (req, res) => { 
     const user_id = req.session.user_id;
@@ -32,7 +35,7 @@ const validateSession = async (req, res) => {
 
 
 
-
+//fetch all auctions
 router.get('/all', async (req, res) => {
     try {
         const auctions = await Auctions.find();
@@ -44,6 +47,8 @@ router.get('/all', async (req, res) => {
     }
 });
 
+
+//fetch featured auctions
 router.get('/featured', async (req, res) => {
     try {
         const featuredAuctions = await Auctions.find({"bids.5" : {"$exists" : true}});
@@ -56,6 +61,8 @@ router.get('/featured', async (req, res) => {
 
 })
 
+
+//fetch auction by id
 router.get('/:id', async (req, res) => {
     console.log('Receive id: ' + req.params.id);
     try {
@@ -71,6 +78,8 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+
+//place bid on (auction_id)
 router.post('/:id/bid', async (req, res) => {
 
     try {
@@ -107,6 +116,8 @@ router.post('/:id/bid', async (req, res) => {
     }
 });
 
+
+//add review on (auction_id)
 router.post(':id/review', async (req, res) => {
     const user_id = req.session.user_id;
     const auction_id = req.params.id;
@@ -135,8 +146,8 @@ router.post(':id/review', async (req, res) => {
 
 
 
-  
-  router.post('/add', upload.single('image-upload'), async (req, res) => {
+//add new auction
+router.post('/add', upload.single('image-upload'), async (req, res) => {
     const isSessionValid = validateSession(req, res);
     if (!isSessionValid) return;
   
