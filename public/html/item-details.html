@@ -21,15 +21,31 @@
     </header>
     
     <main>
-    <div class="container">
-        <div id="product-container">
+        <div class="container grid-layout">
+          
+          <!-- Left: Reviews -->
+          <aside id="reviews-section">
+            <h3>Reviews</h3>
+            <div id="reviews-list">
+              <!-- Dynamically filled via JS -->
+            </div>
+          </aside>
+      
+          <!-- Center: Product -->
+          <section id="product-container">
             <button id="placeBidButton">Place Bid</button>
+          </section>
+      
+          <!-- Right: Product Description / Seller -->
+          <aside id="about-section">
+            <h3>About this Product</h3>
+            <p id="product-description"></p>
+            <p><strong>Seller:</strong> <span id="seller-name"></span></p>
+          </aside>
+      
         </div>
-        <!-- <div class="desc">
-            <p>some description</p>
-        </div> -->
-    </div>
-    </main>
+      </main>
+      
 
     <div id="bidModal">
         <div class="modal-content">

@@ -5,11 +5,28 @@ window.renderProductPage = async function(auction_id) {
 
         const auction = await res.json();
         const productContainer = document.getElementById("product-container");
+        document.getElementById("product-description").textContent = auction.description;
+        document.getElementById("seller-name").textContent = auction.sellerName || "Unknown";
+
+        const reviewsList = document.getElementById('reviews-list');
+
+        auction.feedbacks.forEach(feedback => {
+        const div = document.createElement('div');
+        div.className = 'review';
+        div.innerHTML = `
+            <p>⭐ ${feedback.Stars}</p>
+            <p>${feedback.description}</p>
+            <small>${new Date(feedback.createdAt).toLocaleString()}</small>
+        `;
+        reviewsList.appendChild(div);
+        });
+
+
 
         // ✅ Render auction data including the "Place Bid" button
         productContainer.innerHTML = `
         <h2>${auction.title}</h2>
-        <img src="${auction.img}" alt="${auction.title}" style="width: 100%; max-height: 300px;">
+        <img src="${auction.img}" alt="${auction.title}" style="width: 100%;">
         <p id="currentBid">Current Bid: $${auction.bids.length > 0 
             ? Math.max(...auction.bids.map(bid => bid.amount)) 
             : auction.price}</p>
