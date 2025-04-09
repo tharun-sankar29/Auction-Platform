@@ -162,10 +162,6 @@ router.get('/paymentPage', async (req, res) => {
     }
   });
 
-router.get('/testPage', (req, res) => {
-    res.send("Router is working!");
-  });
-  
   
 
   
