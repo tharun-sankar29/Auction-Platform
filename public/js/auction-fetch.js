@@ -1,11 +1,15 @@
 const fetchAuctions = async (searchTerm = "all") => {
     try {
-        const response = await fetch(`/auctions?search=${encodeURIComponent(searchTerm)}`);
+        const endpoint = searchTerm === "featured"
+            ? '/auctions/featured'
+            : `/auctions?search=${encodeURIComponent(searchTerm)}`;
+            
+        const response = await fetch(endpoint);
         const auctions = await response.json();
         const container = document.getElementById('auction-container');
         container.innerHTML = '';
 
-        if (auctions.length === 0) {
+        if (!auctions || auctions.length === 0) {
             container.innerHTML = `<p>No auctions found...</p>`;
             return;
         }
@@ -39,6 +43,13 @@ const fetchAuctions = async (searchTerm = "all") => {
         console.error('Error fetching auctions:', err);
     }
 };
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchAuctions("featured"); // now works properly!
+});
+
 
 document.getElementById('search-button').addEventListener('click', () => {
     const searchInput = document.getElementById('search').value.trim();

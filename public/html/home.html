@@ -39,8 +39,6 @@
     <script src="/js/auction-fetch.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            fetchAuctions("featured");
-
             const profileIcon = document.getElementById("profile-icon");
             profileIcon.addEventListener('click', async () => {
                 try {
@@ -55,10 +53,8 @@
                     console.error('Error opening profile: ' + err);
                     alert('Something Went Wrong Please try again later...')
                 }
-                
-                
-            })
+            });
         });
-    </script>
+    </script>    
 </body>
 </html>

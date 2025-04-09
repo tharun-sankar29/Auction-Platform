@@ -50,18 +50,23 @@ router.get('/all', async (req, res) => {
 });
 
 
-//fetch featured auctions
+
+// fetch featured auctions (max 5)
 router.get('/featured', async (req, res) => {
-    try {
-        const featuredAuctions = await Auctions.find({"bids.5" : {"$exists" : true}});
-        res.status(200).json(featuredAuctions);
+  try {
+      const featuredAuctions = await Auctions
+          .find({ "bids.0": { "$exists": true } }) // 6 or more bids
+          .sort({ end_time: 1 }) // optional: sort by auction end time
+          .limit(5); // limit to 5 auctions
 
-    } catch (err) {
-        console.error('Error fetching featured auctions:' + err);
-        res.status(500).json({message : 'Server Error Failed to fetch auctions...'})
-    }
+      res.status(200).json(featuredAuctions);
 
-})
+  } catch (err) {
+      console.error('Error fetching featured auctions:' + err);
+      res.status(500).json({ message: 'Server Error Failed to fetch auctions...' });
+  }
+});
+
 
 
 //fetch auction by id
@@ -221,5 +226,6 @@ router.post('/add', upload.single('image-upload'), async (req, res) => {
     }
   });
   
+ 
 
 module.exports = router;
