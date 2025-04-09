@@ -32,7 +32,6 @@ window.renderProductPage = async function(auction_id) {
             : auction.price}</p>
         <p id="timeLeft"></p> <!-- 👈 Changed this line -->
         <button class="add-review" onclick="window.location.href='review.html?id=${auction._id}'">Add Review</button>
-        <button class="view-review" onclick="window.location.href='feedback.ejs.html?id=${auction._id}'">View Review</button>
         <button id="placeBidButton" class="placebid">Place Bid</button>
     `;
     

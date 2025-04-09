@@ -1,8 +1,6 @@
-const fetchAuctions = async (auction_type) => {
+const fetchAuctions = async (searchTerm = "all") => {
     try {
-        const end_point = auction_type === "all" ? '/auctions/all' : '/auctions/featured';
-        const response = await fetch(end_point);
-
+        const response = await fetch(`/auctions?search=${encodeURIComponent(searchTerm)}`);
         const auctions = await response.json();
         const container = document.getElementById('auction-container');
         container.innerHTML = '';
@@ -16,10 +14,9 @@ const fetchAuctions = async (auction_type) => {
             const auctionElement = document.createElement('div');
             auctionElement.classList.add('auction-item');
 
-            // Extracting bid info (current highest bid)
             const currentPrice = auction.bids.length > 0 
-                ? Math.max(...auction.bids.map(bid => bid.amount))   // Get the highest bid
-                : auction.price;                                      // Fallback to starting price
+                ? Math.max(...auction.bids.map(bid => bid.amount))
+                : auction.price;
 
             auctionElement.innerHTML = `
                 <h2 class="auction-item-title">${auction.title}</h2>
@@ -43,5 +40,19 @@ const fetchAuctions = async (auction_type) => {
     }
 };
 
-// After rendering all auctions
+document.getElementById('search-button').addEventListener('click', () => {
+    const searchInput = document.getElementById('search').value.trim();
+    fetchAuctions(searchInput || "all"); // fallback to "all" if input is empty
+});
+
+// Also allow Enter key to trigger search
+document.getElementById('search').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        document.getElementById('search-button').click();
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchAuctions("all");
+});
 

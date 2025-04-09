@@ -205,6 +205,21 @@ router.post('/add', upload.single('image-upload'), async (req, res) => {
     }
   });
   
-
+  router.get('/', async (req, res) => {
+    try {
+      const searchTerm = req.query.search;
+      // If there is a search term, create a query that filters by title using regex for a case-insensitive match
+      const query = searchTerm && searchTerm !== "all"
+        ? { title: { $regex: searchTerm, $options: 'i' } }
+        : {};
+  
+      const auctions = await Auction.find(query);
+      res.json(auctions);
+    } catch (error) {
+      console.error('Error fetching auctions:', error);
+      res.status(500).send('Error fetching auctions');
+    }
+  });
+  
 
 module.exports = router;
