@@ -18,11 +18,11 @@
     font-weight: bold;
     margin: 0;
   }
-
+  
   .top-container span {
     font-size: medium;
   }
-
+  
   #logout-icon {
     position: absolute;
     left: 5px;
@@ -36,49 +36,58 @@
     color: #ffcccb;
   }
   
-
-#container {
+  #container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     gap: 30px;
     padding: 20px;
-}
-
-#sold, .Bids, .Bought {
+  }
+  
+  #sold,
+  .Bids,
+  .Bought,
+  .won-section {
     flex: 1 1 300px;
     background-color: white;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
+  }
+  
+  h2 {
     border-bottom: 2px solid #ccc;
     padding-bottom: 10px;
-}
-
-.product, .myBids, .myBought {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .product,
+  .myBids,
+  .myBought,
+  .won-auction-card {
     margin-bottom: 20px;
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 10px;
     background-color: #cff5c2;
-}
-
-.product img,
-.myBids img,
-.myBought img {
+  }
+  
+  .product img,
+  .myBids img,
+  .myBought img,
+  .won-auction-card img {
     width: 100%;
     height: auto;
     max-height: 200px;
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 10px;
-}
-
-#upt-auction {
-    background-color: #28a745; /* Green */
+  }
+  
+  #upt-auction {
+    background-color: #28a745;
     color: white;
     padding: 8px 16px;
     margin: 5px 0;
@@ -86,14 +95,14 @@ h2 {
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-
-#upt-auction:hover {
+  }
+  
+  #upt-auction:hover {
     background-color: #218838;
-}
-
-#dlt-auction {
-    background-color: #dc3545; /* Red */
+  }
+  
+  #dlt-auction {
+    background-color: #dc3545;
     color: white;
     padding: 8px 16px;
     margin: 5px 0;
@@ -101,24 +110,75 @@ h2 {
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-
-#dlt-auction:hover {
+  }
+  
+  #dlt-auction:hover {
     background-color: #c82333;
-}
-
-
-.noProduct, .NoBids, .noBuys {
+  }
+  
+  .noProduct,
+  .NoBids,
+  .noBuys {
     color: gray;
     font-style: italic;
     text-align: center;
-}
-
-.price, .maxBid, .endingTime, .final {
+  }
+  
+  .price,
+  .maxBid,
+  .endingTime,
+  .final {
     margin: 8px 0;
-}
-
-.btn {
+  }
+  
+  .btn {
     text-align: center;
     margin-top: 10px;
-}
+  }
+  
+  
+  .won-auction-card {
+    background-color: #cff5c2;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .won-auction-card img {
+    max-width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .won-auction-card h3 {
+    margin: 0.5rem 0;
+    font-size: 1.4rem;
+    color: #222;
+  }
+  
+  .won-auction-card p {
+    margin: 0.3rem 0;
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .payment-btn {
+    margin-top: 10px;
+    background-color: #28a745;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .payment-btn:hover {
+    background-color: #218838;
+  }

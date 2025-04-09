@@ -48,16 +48,16 @@ router.post('/register', async (req, res) => {
     }
 });
 
-// ✅ LOGOUT Route
+// LOGOUT Route
 router.get('/logout', (req, res) => {
     req.session.destroy(() => {
         res.status(200).json({ message: "Logged out successfully" });
     });
 });
 
-// ✅ Corrected Session Retrieval Route
+// Session Retrieval Route
 router.get('/session', (req, res) => {
-    if (req.session.user_id) {  // ✅ Correctly check for user_id in session
+    if (req.session.user_id) {  // 
         res.json({ user_id: req.session.user_id });
     } else {
         res.status(401).json({ message: 'Not logged in' });
@@ -70,27 +70,38 @@ router.get('/profile', async (req, res) => {
     }
 
     try {
-        const userData = await User.findById(req.session.user_id);
-        const soldData = await Auction.find({ seller_id: req.session.user_id });
-        const activeAuctions = await Auction.find({ seller_id: req.session.user_id, status: { $ne: "Dead" } });
-        const deadData = await Dead.find({ seller_id: req.session.user_id });
+        const userId = req.session.user_id;
+        const userData = await User.findById(userId);
 
-        // Function to compute the max bid amount
+        const soldData = await Auction.find({ seller_id: userId });
+        const activeAuctions = await Auction.find({ seller_id: userId, end_time: { $gt: new Date() } });
+
+        // Find all auctions where bidding has ended
+        const endedAuctions = await Auction.find({
+            end_time: { $lte: new Date() },
+            bids: { $exists: true, $ne: [] }
+        }).lean();
+
+        // Get only the ones where the current user has the highest bid
+        const wonAuctions = endedAuctions.filter(auction => {
+            const highestBid = auction.bids.reduce((max, bid) => bid.amount > max.amount ? bid : max, { amount: 0 });
+            return highestBid.user_id?.toString() === userId;
+        });
+
+      
         const computeMaxBid = (auction) => {
             return auction.bids.reduce((max, bid) => bid.amount > max ? bid.amount : max, 0);
         };
 
-        // Add max bid amount to each auction object
         soldData.forEach(auction => auction.maxamount = computeMaxBid(auction));
         activeAuctions.forEach(auction => auction.maxamount = computeMaxBid(auction));
-        deadData.forEach(dead => dead.maxamount = computeMaxBid(dead));
+        wonAuctions.forEach(auction => auction.maxamount = computeMaxBid(auction));
 
-        // Render the profile view
-        res.render('profile', { 
-            user: userData, 
-            soldProduct: soldData, 
-            auction: activeAuctions, 
-            Deadauction: deadData,
+        res.render('profile', {
+            user: userData,
+            soldProduct: soldData,
+            auction: activeAuctions,
+            wonAuctions: wonAuctions 
         });
 
     } catch (err) {
@@ -99,48 +110,63 @@ router.get('/profile', async (req, res) => {
     }
 });
 
-router.post('/payment', async (req, res) => {
-  try {
-    const { deadId, amt, payment_method } = req.body;
-    const userId = req.session.userId || null;
 
-    const newPayment = new Payment({
-      user_id: userId,
-      dead_id: deadId, 
-      payment_status: 'Pending', 
-      amount: amt 
-    });
-    await newPayment.save();
-
-    res.status(201).send("Payment processed successfully!");
-  } catch (err) {
-    console.error("Payment error:", err);
-    res.status(400).send("Payment failed.");
-  }
-});
-
-router.get('/paymentPage', async (req, res) => {
+// Route to handle payment submission
+router.post('/payment/:id', async (req, res) => {
     try {
-      const { deadId } = req.query;  // Retrieve the deadId from query params
+      const { deadId, amt, payment_method } = req.body;
+      const userId = req.session.user_id || null;
   
-      // Check if deadId is provided
+      const newPayment = new Payment({
+        user_id: userId,
+        dead_id: deadId, // This refers to the auction the user won
+        payment_status: 'Pending',
+        amount: amt,
+        payment_method // Optional: include it if you're planning to use it
+      });
+  
+      await newPayment.save();
+  
+      res.status(201).send("Payment processed successfully!");
+    } catch (err) {
+      console.error("Payment error:", err);
+      res.status(400).send("Payment failed.");
+    }
+  });
+  
+
+
+// Route to show payment page
+router.get('/paymentPage', async (req, res) => {
+      
+      
+    try {
+      const { deadId } = req.query;
+  
       if (!deadId) {
         return res.status(400).send("Missing deadId parameter.");
       }
   
-      // Fetch the auction data from your database based on deadId
-      const deadData = await Dead.findById(deadId);
+      const deadData = await Auction.findById(deadId);
       if (!deadData) {
-        return res.status(404).send("Dead auction not found.");
+        return res.status(404).send("Auction not found.");
       }
   
-      // Pass amount and deadId to the EJS template
-      res.render('payment', { amount: deadData.maxamount, deadId: deadData._id });
+      const maxBid = deadData.bids.reduce((max, bid) => bid.amount > max ? bid.amount : max, 0);
+  
+      res.render('payment', { amount: maxBid, deadId: deadData._id });
+  
     } catch (err) {
-      console.error(err);
-      res.status(500).send("Server error.");
+      console.error("Payment page error:", err);
+      res.status(500).json({ message: "Failed to Fetch Auction.." });
     }
-});
+  });
+
+router.get('/testPage', (req, res) => {
+    res.send("Router is working!");
+  });
+  
+  
 
   
 

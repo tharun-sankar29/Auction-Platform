@@ -14,6 +14,7 @@
       </div>
 
       <div id="container">
+          <!-- Sold Products Section -->
           <div id="sold">
               <h2>Sold Products</h2>
               <% if (soldProduct && soldProduct.length > 0) { %>
@@ -23,11 +24,11 @@
                           <h3 class="name"><%= product.title || product.name %></h3>
                           <p>Price: <%= product.price %></p>
                           <p>Sold Price: <%= product.maxamount ? product.maxamount : "N/A" %></p>
-                          <form action="/auction/<%= product._id %> method=PUT" method="post">
-                          <button type="submit" id="upt-auction">Update Auction</button>
+                          <form action="/auction/<%= product._id %>?_method=PUT" method="post">
+                            <button type="submit" id="upt-auction">Update Auction</button>
                           </form>
-                          <form action="/auction/<%= product._id %> method=DELETE" method="post" onsubmit=" return confirm('Do you want to delete the auction');">
-                          <button type="submit" id="dlt-auction">Delete Auction</button>
+                          <form action="/auction/<%= product._id %>?_method=DELETE" method="post" onsubmit="return confirm('Do you want to delete the auction?');">
+                            <button type="submit" id="dlt-auction">Delete Auction</button>
                           </form>
                       </div>
                   <% }); %>
@@ -35,7 +36,8 @@
                   <p class="noProduct">No Product Sold</p>
               <% } %>
           </div>
-          
+
+          <!-- Active Auctions Section -->
           <div class="Bids">
               <h2>Active Auctions</h2>
               <% if (auction && auction.length > 0) { %>
@@ -53,24 +55,29 @@
               <% } %>
           </div>
 
-          <div class="Bought">
-            <h2>Dead Auctions</h2>
-            <% if (Deadauction && Deadauction.length > 0) { %>
-                <% Deadauction.forEach(function(dead) { %>
-                    <div class="myBought">
-                        <h3 class="bought"><%= dead.title %></h3>
-                        <img src="<%= dead.img %>" alt="<%= dead.title %>">
-                        <p class="price">Price: <%= dead.price %></p>
-                        <p class="final">Final Bid: <%= dead.maxamount ? dead.maxamount : "No bids" %></p>
-                        <p class="btn"><button type="submit" id="btn" onclick="window.location.href='payment.ejs'">Payment</button></p>
-                    </div>
-                <% }); %>
-            <% } else { %>
-                <p class="noBuys">No item Bought</p>
-            <% } %>
+          <!-- Won Auctions Awaiting Payment -->
+          <div class="won-section">
+              <h2>Won Auctions - Awaiting Payment</h2>
+              <% if (wonAuctions && wonAuctions.length > 0) { %>
+                  <% wonAuctions.forEach(function(won) { %>
+                      <div class="won-auction-card">
+                          <h3><%= won.title %></h3>
+                          <img src="<%= won.img %>" alt="<%= won.title %>">
+                          <p class="price">Your Bid: $<%= won.maxamount %></p>
+                          <p class="end-time">Ended on: <%= won.end_time.toLocaleString() %></p>
+                          <form action="/auth/paymentPage" method="GET">
+                            <input type="hidden" name="deadId" value="<%= won._id %>">
+                            <button type="submit" class="payment-btn">Pay</button>
+                          </form>
+                        
+                      </div>
+                  <% }) %>
+              <% } else { %>
+                  <p class="no-wins">You haven't won any auctions yet.</p>
+              <% } %>
           </div>
       </div>
+
       <script src="https://kit.fontawesome.com/10e51ef5e7.js" crossorigin="anonymous"></script>
   </body>
-  
 </html>

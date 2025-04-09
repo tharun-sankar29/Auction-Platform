@@ -8,7 +8,7 @@ const methodOverride = require('method-override');
 const app = express();
 app.use(methodOverride('_method'));
 
-const { User, Auction, Product, Dead, Payment} = require('./schema/schema');
+const { User, Auction, Dead, Payment} = require('./schema/schema');
 
 //session initialization
 // ejs view
@@ -26,80 +26,6 @@ app.use(session({
 
 app.use(express.static(path.join(__dirname, '../public')));
 //update
-app.put('/auction/:id', async (req, res) => {
-  try {
-    await Auction.findByIdAndUpdate(req.params.id, req.body);
-    res.redirect('seller.html');
-  } catch (err) {
-    res.status(500).send("Error updating auction: " + err);
-  }
-});
-
-//delete
-app.delete('/auction/:id', async (req,res) => {
-  try {
-    await Auction.findByIdAndDelete(req.params.id);
-  } catch (err) {
-    res.send("Error: ",err);
-  }
-})
-app.get('../feedback.ejs', async (req,res) => {
-    try {
-        feedbackData = await Auction.findById(auction_id).populate('feedbacks.user_id'); // req.params.id - getting auction Id from link
-        // .populate(id) - replace feedback id with userid
-        feedbackData.feedbacks.forEach( fd => {
-            let stars='';
-            switch (fd.rating) {
-                case 1: stars = '★'; break;
-                case 2: stars = '★★'; break;
-                case 3: stars = '★★★'; break;
-                case 4: stars = '★★★★'; break;
-                case 5: stars = '★★★★★'; break;
-            }
-            fd.Stars = stars;
-        })
-        res.render('../feedback.ejs', {
-            feedback: feedbackData
-        })
-    } catch (err) {
-        console.error(err)
-    }
-});
-
-app.get('../payment.ejs', async (req, res) => {
-  try {
-    const deadData = await Dead.findById(req.params.deadId);
-    if (!deadData) {
-      return res.status(404).send("Dead auction not found.");
-    }
-  
-    res.render('../payment.ejs', { amount: deadData.maxamount, deadId: deadData._id });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server error.");
-  }
-});
-
-// Route to handle payment submission
-app.post('/payment', async (req, res) => {
-  try {
-    const { deadId, amt, payment_method } = req.body;
-    const userId = req.session.userId || null;
-
-    const newPayment = new Payment({
-      user_id: userId,
-      dead_id: deadId, 
-      payment_status: 'Pending', 
-      amount: amount
-    });
-    await newPayment.save();
-
-    res.status(201).send("Payment processed successfully!");
-  } catch (err) {
-    console.error("Payment error:", err);
-    res.status(400).send("Payment failed.");
-  }
-});
 
 
 const authRoutes = require('./authRouting');
