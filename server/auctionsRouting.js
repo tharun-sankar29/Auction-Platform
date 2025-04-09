@@ -7,17 +7,19 @@ const path = require('path');
 
 const Auctions = Auction;
 
+
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'public/images/auction-items');
-    },
-    filename: function (req, file, cb) {
-      const uniqueName = Date.now() + path.extname(file.originalname);
-      cb(null, uniqueName);
-    }
-  });
-  
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, 'public', 'images', 'auction-items'));
+  },
+  filename: function (req, file, cb) {
+    const uniqueName = Date.now() + path.extname(file.originalname);
+    cb(null, uniqueName);
+  }
+});
+
 const upload = multer({ storage });
+
 
 
 //Session Validation
