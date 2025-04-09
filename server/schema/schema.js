@@ -15,7 +15,8 @@ const auctionSchema = new mongoose.Schema({
     start_time: Date,                 // Auction start time
     end_time: Date,                   // Auction end time
     price: Number,                    // Starting price
-    seller_id: mongoose.Schema.Types.ObjectId,  // Seller ID (from users collection)
+    seller_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  // Seller ID (from users collection)
     bids: [
         {
             user_id: mongoose.Schema.Types.ObjectId,   // Bidder ID

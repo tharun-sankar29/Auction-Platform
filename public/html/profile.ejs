@@ -16,65 +16,50 @@
       <div id="container">
           <!-- Sold Products Section -->
           <div id="sold">
-              <h2>Sold Products</h2>
-              <% if (soldProduct && soldProduct.length > 0) { %>
-                  <% soldProduct.forEach(function(product) { %>
-                      <div class="product">
-                          <img src="<%= product.img %>" alt="<%= product.title || product.name %>">
-                          <h3 class="name"><%= product.title || product.name %></h3>
-                          <p>Price: <%= product.price %></p>
-                          <p>Sold Price: <%= product.maxamount ? product.maxamount : "N/A" %></p>
-                          <form action="/auction/<%= product._id %>?_method=PUT" method="post">
-                            <button type="submit" id="upt-auction">Update Auction</button>
-                          </form>
-                          <form action="/auction/<%= product._id %>?_method=DELETE" method="post" onsubmit="return confirm('Do you want to delete the auction?');">
-                            <button type="submit" id="dlt-auction">Delete Auction</button>
-                          </form>
-                      </div>
-                  <% }); %>
-              <% } else { %>
-                  <p class="noProduct">No Product Sold</p>
-              <% } %>
+            <h2>Sold Products</h2>
+            <% if (soldProduct.length > 0) { %>
+              <ul>
+                <% soldProduct.forEach(function(item) { %>
+                  <li>
+                    <strong><%= item.title %></strong> - Sold for ₹<%= item.maxamount %>
+                  </li>
+                <% }); %>
+              </ul>
+            <% } else { %>
+              <p>No products sold yet.</p>
+            <% } %>            
           </div>
 
           <!-- Active Auctions Section -->
           <div class="Bids">
-              <h2>Active Auctions</h2>
-              <% if (auction && auction.length > 0) { %>
-                  <% auction.forEach(function(myBid) { %>
-                      <div class="myBids">
-                          <h3 class="bid"><%= myBid.title %></h3>
-                          <img src="<%= myBid.img %>" alt="<%= myBid.title %>">
-                          <p class="price">Starting Price: <%= myBid.price %></p>
-                          <p class="maxBid">Highest Bid: <%= myBid.maxamount ? myBid.maxamount : "No bids yet" %></p>
-                          <p class="endingTime">Ends at: <%= myBid.end_time ? myBid.end_time.toLocaleString() : "N/A" %></p>
-                      </div>
-                  <% }); %>
-              <% } else { %>
-                  <p class="NoBids">No active Auctions</p>
-              <% } %>
+            <h2>Active Auctions</h2>
+            <% if (auction.length > 0) { %>
+              <ul>
+                <% auction.forEach(function(item) { %>
+                  <li>
+                    <strong><%= item.title %></strong> - Current Bid: ₹<%= item.maxamount %>
+                  </li>
+                <% }); %>
+              </ul>
+            <% } else { %>
+              <p>No active auctions.</p>
+            <% } %>            
           </div>
 
           <!-- Won Auctions Awaiting Payment -->
           <div class="won-section">
-              <h2>Won Auctions - Awaiting Payment</h2>
-              <% if (wonAuctions && wonAuctions.length > 0) { %>
-                  <% wonAuctions.forEach(function(won) { %>
-                      <div class="won-auction-card">
-                          <h3><%= won.title %></h3>
-                          <img src="<%= won.img %>" alt="<%= won.title %>">
-                          <p class="price">Your Bid: $<%= won.maxamount %></p>
-                          <p class="end-time">Ended on: <%= won.end_time.toLocaleString() %></p>
-                          <form action="/auth/paymentPage" method="GET">
-                            <input type="hidden" name="deadId" value="<%= won._id %>">
-                            <button type="submit" class="payment-btn">Pay</button>
-                          </form>
-                        
-                      </div>
-                  <% }) %>
-              <% } else { %>
-                  <p class="no-wins">You haven't won any auctions yet.</p>
-              <% } %>
+            <h2>Won Auctions</h2>
+            <% if (wonAuctions.length > 0) { %>
+              <ul>
+                <% wonAuctions.forEach(function(item) { %>
+                  <li>
+                    <strong><%= item.title %></strong> - Won for ₹<%= item.maxamount %>
+                  </li>
+                <% }); %>
+              </ul>
+            <% } else { %>
+              <p>You haven't won any auctions yet.</p>
+            <% } %>            
           </div>
       </div>
 

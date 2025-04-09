@@ -73,7 +73,9 @@ router.get('/featured', async (req, res) => {
 router.get('/:id', async (req, res) => {
     console.log('Receive id: ' + req.params.id);
     try {
-        const auction = await Auctions.findById(req.params.id);
+      const auction = await Auctions.findById(req.params.id)
+      .populate('seller_id', 'name') // 👈 fetch seller name from User
+      .populate('feedbacks.user_id', 'name'); // 👈 fetch reviewer name  
         if(!auction) {
             return res.status(404).json({message : 'Auction Not Found..'})
         }
@@ -195,7 +197,7 @@ router.post('/add', upload.single('image-upload'), async (req, res) => {
         start_time: parsedStartTime,
         end_time: parsedEndTime,
         price: Number(price),
-        seller_id: req.session.userId,
+        seller_id: req.session.user_id,
         bids: [],
         feedbacks: []
       });

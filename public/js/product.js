@@ -6,8 +6,7 @@ window.renderProductPage = async function(auction_id) {
         const auction = await res.json();
         const productContainer = document.getElementById("product-container");
         document.getElementById("product-description").textContent = auction.description;
-        document.getElementById("seller-name").textContent = auction.sellerName || "Unknown";
-
+        document.getElementById("seller-name").textContent = auction.seller_id?.name || "Unknown";
         const reviewsList = document.getElementById('reviews-list');
 
         auction.feedbacks.forEach(feedback => {
