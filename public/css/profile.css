@@ -1,3 +1,4 @@
+/* === Top Container === */
 .top-container {
   display: flex;
   align-items: center;
@@ -31,6 +32,7 @@
   color: #ffcccb;
 }
 
+/* === Layout Container === */
 #container {
   display: flex;
   flex-wrap: wrap;
@@ -39,45 +41,54 @@
   padding: 20px;
 }
 
+/* === Section Styles (Sold, Active, Won, Participated) === */
 #sold,
 .Bids,
-.won-section {
+.won-section,
+#participated {
   flex: 1 1 300px;
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 20px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
 }
 
+/* === Headings for all sections === */
 h2 {
   border-bottom: 2px solid #ccc;
   padding-bottom: 10px;
   margin-bottom: 20px;
   font-size: 1.5rem;
-  color: #333;
+  color: #004e89;
 }
 
+/* === Auction Card === */
 .auction-card {
   margin-bottom: 20px;
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 10px;
   background-color: #f0f8ff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+/* === Auction Actions === */
 .auction-actions {
   margin-top: 10px;
 }
 
-.edit-btn {
-  background-color: #007bff;
-  color: white;
+.edit-btn,
+.delete-btn {
   padding: 6px 12px;
   border: none;
   border-radius: 6px;
-  margin-right: 10px;
   cursor: pointer;
+  color: white;
   transition: background-color 0.2s ease;
+}
+
+.edit-btn {
+  background-color: #007bff;
 }
 
 .edit-btn:hover {
@@ -86,27 +97,22 @@ h2 {
 
 .delete-btn {
   background-color: #dc3545;
-  color: white;
-  padding: 6px 12px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
 }
 
 .delete-btn:hover {
   background-color: #a71d2a;
 }
 
+/* === Won Auction Card === */
 .won-auction-card {
-  background: linear-gradient(145deg, #e3f2fd, #bbdefb); /* Soft gradient blue */
+  background: linear-gradient(145deg, #e3f2fd, #bbdefb);
   padding: 20px;
   border: 1px solid #90caf9;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(21, 101, 192, 0.15);
+  box-shadow: 0 4px 8px rgba(21, 101, 192, 0.1);
   margin-bottom: 20px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
   text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .won-auction-card:hover {
@@ -114,18 +120,7 @@ h2 {
   box-shadow: 0 6px 12px rgba(21, 101, 192, 0.25);
 }
 
-.won-auction-card h3 {
-  font-size: 1.5rem;
-  color: #0d47a1;
-  margin-bottom: 10px;
-}
-
-.won-auction-card p {
-  font-size: 1rem;
-  color: #333;
-  margin: 5px 0;
-}
-
+/* === Payment Button === */
 .payment-btn {
   display: inline-block;
   margin-top: 12px;
@@ -146,20 +141,52 @@ h2 {
   transform: scale(1.05);
 }
 
+/* === Participated Section === */
+#participated ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
+#participated li {
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+#participated li:hover {
+  transform: translateY(-2px);
+}
+
+#participated strong {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+#participated .current-price-highlight {
+  color: #0077cc;
+  font-weight: bold;
+}
+
+#participated small {
+  display: block;
+  margin-top: 5px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* === Utility === */
 .noProduct,
 .NoBids,
-.noBuys {
+.noBuys,
+.noParticipation {
   color: gray;
   font-style: italic;
   text-align: center;
-}
-
-.price,
-.maxBid,
-.endingTime,
-.final {
-  margin: 8px 0;
 }
 
 .current-price-highlight {
@@ -170,4 +197,11 @@ h2 {
   color: #1565c0;
   display: inline-block;
   margin-top: 5px;
+}
+
+.price,
+.maxBid,
+.endingTime,
+.final {
+  margin: 8px 0;
 }

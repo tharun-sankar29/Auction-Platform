@@ -73,13 +73,18 @@ router.get('/profile', async (req, res) => {
         const userId = req.session.user_id;
         const userData = await User.findById(userId);
 
+        // Fetch all auctions (you can change this query if necessary)
         const allAuctions = await Auction.find({});
         console.log(allAuctions);
 
-
+        // Fetch sold products by the user
         const soldData = await Auction.find({ seller_id: userId });
-        const activeAuctions = await Auction.find({ seller_id: userId, end_time: { $gt: new Date() } });
 
+        // Fetch active auctions where the user is the seller and the auction is still active
+        const activeAuctions = await Auction.find({
+            seller_id: userId,
+            end_time: { $gt: new Date() }
+        });
 
         // Find all auctions where bidding has ended
         const endedAuctions = await Auction.find({
@@ -87,13 +92,13 @@ router.get('/profile', async (req, res) => {
             bids: { $exists: true, $ne: [] }
         }).lean();
 
-        // Get only the ones where the current user has the highest bid
+        // Filter the ended auctions where the current user has the highest bid
         const wonAuctions = endedAuctions.filter(auction => {
             const highestBid = auction.bids.reduce((max, bid) => bid.amount > max.amount ? bid : max, { amount: 0 });
             return highestBid.user_id?.toString() === userId;
         });
 
-      
+        // Compute max bid for active, sold, and won auctions
         const computeMaxBid = (auction) => {
             return auction.bids.reduce((max, bid) => bid.amount > max ? bid.amount : max, 0);
         };
@@ -102,11 +107,21 @@ router.get('/profile', async (req, res) => {
         activeAuctions.forEach(auction => auction.maxamount = computeMaxBid(auction));
         wonAuctions.forEach(auction => auction.maxamount = computeMaxBid(auction));
 
+        // Find all auctions the user has participated in
+        const participatedAuctions = await Auction.find({
+            'bids.user_id': userId
+        });
+
+        // Find all bids by the user
+        const allBids = await Auction.find({ 'bids.user_id': req.session.user_id });
+
         res.render('profile', {
             user: userData,
             soldProduct: soldData,
             auction: activeAuctions,
-            wonAuctions: wonAuctions 
+            bidAuctions: allBids,
+            wonAuctions: wonAuctions,
+            participatedAuctions: participatedAuctions  // Added participatedAuctions to the render
         });
 
     } catch (err) {

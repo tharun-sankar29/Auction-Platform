@@ -194,7 +194,7 @@ router.post('/add', upload.single('image-upload'), async (req, res) => {
         return res.status(400).json({ message: 'Invalid start or end time' });
       }
   
-      const imageFile = req.file ? `/images/auction-items/${req.file.filename}` : null;
+      const imageFile = req.file ? `/images/auction-items/${req.file.filename}` : 'images/404.png';
   
       const newAuction = new Auctions({
         title: name,
@@ -301,5 +301,26 @@ router.get('/', async(req,res) => {
     res.status(500).json({ message: 'Cant find auction'});
   }
 })
+
+router.get('/participated', async (req, res) => {
+  try {
+    // Assuming user_id is stored in session
+    const userId = req.session.user_id;
+
+    if (!userId) {
+      return res.status(401).json({ message: 'Please log in to view your participated auctions.' });
+    }
+
+    // Find all auctions where the user has placed a bid
+    const participatedAuctions = await Auction.find({
+      'bids.user_id': userId  // Check if user_id exists in bids array
+    });
+
+    res.render('profile', { participatedAuctions }); // Pass the data to the profile page
+  } catch (err) {
+    console.error('Error fetching participated auctions:', err);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 module.exports = router;

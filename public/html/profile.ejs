@@ -39,6 +39,29 @@
         <% } %>
       </div>
 
+<!-- Participated Auctions Section -->
+      <div id="participated">
+      <h2>Participated Auctions</h2>
+      <% if (participatedAuctions && participatedAuctions.length > 0) { %>
+        <ul>
+          <% participatedAuctions.forEach(function(auction) { %>
+            <li>
+              <strong><%= auction.title %></strong> - 
+              <span class="current-price-highlight">
+                ₹<%= auction.bids[auction.bids.length - 1].amount %>
+              </span>
+              <br />
+              <small>Bid placed on: <%= new Date(auction.bids[auction.bids.length - 1].bid_time).toLocaleString() %></small>
+            </li>
+          <% }); %>
+        </ul>
+      <% } else { %>
+        <p class="noParticipation">You haven't participated in any auctions yet.</p>
+      <% } %>
+    </div>
+
+
+
       <!-- Active Auctions Section -->
       <div class="Bids">
         <h2>Active Auctions</h2>
