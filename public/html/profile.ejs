@@ -108,7 +108,7 @@
                 <strong><%= item.title %></strong> -
                 <span class="current-price-highlight">₹<%= item.maxamount %></span>
                 <br />
-                <a href="public/html/payment.ejs?deadId=<%= item._id %>" class="payment-btn">Pay Now</a>
+                <a href="/auth/paymentPage?deadId=<%= item._id %>" class="payment-btn">Pay Now</a>
               </li>
             <% }); %>
           </ul>
