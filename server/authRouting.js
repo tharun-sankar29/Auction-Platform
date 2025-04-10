@@ -157,7 +157,7 @@ router.post('/payment/:id', async (req, res) => {
 
 
 // Route to show payment page
-router.get('/paymentPage', async (req, res) => {
+router.get('/paymentPage/:id', async (req, res) => {
       
       
     try {
@@ -181,8 +181,6 @@ router.get('/paymentPage', async (req, res) => {
       res.status(500).json({ message: "Failed to Fetch Auction.." });
     }
   });
-
-  
 
   
 
