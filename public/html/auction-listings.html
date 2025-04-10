@@ -47,8 +47,27 @@
             }
         }
         document.addEventListener('DOMContentLoaded', () => {
-            fetchAuctions("all");
-        })
+        // Initial load: show all auctions
+        fetchAuctions("all");
+
+        const searchInput = document.getElementById('search');
+        const searchBtn = document.getElementById('search-button');
+
+        if (searchInput && searchBtn) {
+            // On button click, fetch filtered auctions
+            searchBtn.addEventListener('click', () => {
+                const term = searchInput.value.trim();
+                fetchAuctions(term || "all");
+            });
+
+            // Also allow Enter key to trigger search
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    searchBtn.click();
+                }
+            });
+        }
+    });
     </script>
 
     <footer>

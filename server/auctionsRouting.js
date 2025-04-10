@@ -51,13 +51,12 @@ router.get('/all', async (req, res) => {
 
 
 
-// fetch featured auctions (max 5)
 router.get('/featured', async (req, res) => {
   try {
       const featuredAuctions = await Auctions
           .find({ 
-              "bids.0": { "$exists": true },
-              end_time: { $gt: new Date() }  // Only active auctions
+              "bids.3": { "$exists": true },
+              end_time: { $gt: new Date() } 
           })
           .sort({ end_time: 1 })
           .limit(5);

@@ -1,6 +1,6 @@
-const express = require('express');
+const express = require('express')
 const router = express.Router();
-const { Payment } = require('./server/schema/schema.js'); 
+const { Payment } = require('./schema/schema'); 
 
 router.post('/', async (req, res) => {
   try {

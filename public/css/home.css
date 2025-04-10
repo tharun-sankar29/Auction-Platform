@@ -101,51 +101,89 @@ header i:hover {
 }
 
 .auction-item {
-    width: 29%;
-    min-width: 200px; 
-    background: white;
-    border: 1px solid #bbdefb;
-    border-radius: 10px;
-    margin: 20px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    min-height: 500px;
+    background: linear-gradient(to bottom right, #e3f2fd, #ffffff);
+    border: 2px solid #2196f3;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.1);
     overflow: hidden;
-    transition: transform 0.3s ease;
-    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .auction-item:hover {
-    transform: scale(1.03);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(21, 101, 192, 0.2);
 }
 
-.auction-item img {
+.auction-item-title {
+    font-size: 1.2rem;
+    color: #1565c0;
+    margin-bottom: 12px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.image-container {
     width: 100%;
-    height: auto;
-    object-fit: cover;
+    height: 70%;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.auction-image {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
     transition: transform 0.3s ease;
 }
 
-.auction-item img:hover {
-    transform: scale(1.1);
+.auction-item:hover .auction-image {
+    transform: scale(1.05);
 }
 
-.placebid {
-    background: linear-gradient(135deg, #2196f3, #1565c0); 
+.auction-description {
+    font-size: 1rem;
+    color: #333;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.view-details-btn {
+    background-color: #2196f3;
     color: white;
-    font-size: medium;
     border: none;
-    width: 40%;
     height: 50px;
+    padding: 8px 16px;
+    border-radius: 20px;
     cursor: pointer;
-    border-radius: 45px;
-    margin-top: 20px;
-    transition: all 0.5s ease;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    transition: background-color 0.2s ease;
+    margin-top: auto;
+    font-size: medium;
 }
 
-.placebid:hover {
-    transform: scale(1.1) translateY(-5px);
-    background: #1565c0;
+.auction-description p {
+    font-size: large;
+    background-color: #e3f2fd;
+    color: #1565c0;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 8px;
+    text-align: center;
+    display: inline-block;
+    margin-top: 8px;
 }
+
+
+.view-details-btn:hover {
+    background-color: #1565c0;
+}
+
+
+
+

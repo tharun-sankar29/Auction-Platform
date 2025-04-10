@@ -64,53 +64,5 @@ footer p {
     box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.edit-btn {
-    background-color: #007bff;
-    color: white;
-    padding: 6px 12px;
-    border: none;
-    border-radius: 6px;
-    margin-right: 10px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
 
-.edit-btn:hover {
-    background-color: #0056b3;
-}
 
-.delete-btn {
-    background-color: #dc3545;
-    color: white;
-    padding: 6px 12px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.delete-btn:hover {
-    background-color: #a71d2a;
-}
-
-.view-details-btn {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    margin-top: 10px;
-}
-
-.view-details-btn:hover {
-    background-color: #218838;
-    transform: scale(1.05);
-}
-
-.view-details-btn:active {
-    transform: scale(0.98);
-}

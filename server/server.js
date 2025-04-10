@@ -8,7 +8,7 @@ const methodOverride = require('method-override');
 const app = express();
 app.use(methodOverride('_method'));
 
-const { User, Auction, Dead, Payment} = require('./schema/schema');
+// const { User, Auction, Dead, Payment} = require('./schema/schema');
 
 //session initialization
 // ejs view
@@ -30,6 +30,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 const authRoutes = require('./authRouting');
 const auctionRoutes = require('./auctionsRouting');
+const paymentRoutes = require('./paymentRouting');
 
 
 app.use(express.json());
@@ -54,6 +55,7 @@ module.exports = authMiddleware;
 //set routing address..
 app.use('/auth', authRoutes);
 app.use('/auctions', auctionRoutes, authMiddleware);
+app.use('/payments', paymentRoutes);
 
 // Serve static files from multiple folders
 
@@ -90,8 +92,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../public/html/home.html'));  // Serve home.html
 });
 
-const paymentRoutes = require('../public/js/paymentRouting.js'); // adjust the path if needed
-app.use('/payments', paymentRoutes);
+
 
 
 app.listen(PORT, () => {
