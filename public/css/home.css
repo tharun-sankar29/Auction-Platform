@@ -9,7 +9,7 @@
 }
 
 body {
-    background: linear-gradient(to right, #e3f2fd, #c8e6c9);
+    background: linear-gradient(to right, #e3f2fd, #bbdefb);
     transition: background 0.5s ease;
 }
 
@@ -17,7 +17,7 @@ header {
     display: flex;
     justify-content: center;   
     align-items: center;
-    background: linear-gradient(135deg, #4caf50, #2e7d32);
+    background: linear-gradient(135deg, #2196f3, #1565c0);
     color: white;
     padding: 20px;
     position: relative;        
@@ -58,7 +58,7 @@ header i:hover {
 
 .menu-item {
     text-decoration: none;
-    border: 1px solid #4caf50;
+    border: 1px solid #2196f3;
     border-radius: 10px;
     overflow: hidden;
     width: 20%;
@@ -80,10 +80,9 @@ header i:hover {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-
 .menu-item-header {
     width: 100%;
-    background: linear-gradient(135deg, #4caf50, #2e7d32);
+    background: linear-gradient(135deg, #2196f3, #1565c0);
     color: white;
     text-align: center;
     padding: 15px;
@@ -105,7 +104,7 @@ header i:hover {
     width: 29%;
     min-width: 200px; 
     background: white;
-    border: 1px solid #c8e6c9;
+    border: 1px solid #bbdefb;
     border-radius: 10px;
     margin: 20px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
@@ -131,7 +130,7 @@ header i:hover {
 }
 
 .placebid {
-    background: linear-gradient(135deg, #4caf50, #2e7d32); 
+    background: linear-gradient(135deg, #2196f3, #1565c0); 
     color: white;
     font-size: medium;
     border: none;
@@ -148,5 +147,5 @@ header i:hover {
 
 .placebid:hover {
     transform: scale(1.1) translateY(-5px);
-    background: #2e7d32;
+    background: #1565c0;
 }

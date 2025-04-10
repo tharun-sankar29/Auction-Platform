@@ -2,8 +2,8 @@
     width: 40%;
     margin: 40px auto;
     padding: 30px 30px;
-    background-color: #f9fff9;
-    border: 1px solid #c8e6c9;
+    background-color: #f0f8ff; /* light blue background */
+    border: 1px solid #bbdefb;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease-in-out;
@@ -15,7 +15,7 @@
 
 .product-form-container h2 {
     text-align: center;
-    color: #388e3c;
+    color: #1565c0; /* strong blue */
     font-size: 1.8rem;
     margin-bottom: 25px;
     font-weight: 600;
@@ -29,7 +29,7 @@
     display: block;
     font-weight: 600;
     margin-bottom: 6px;
-    color: #2e7d32;
+    color: #1976d2; /* medium blue */
     font-size: 0.95rem;
 }
 
@@ -38,7 +38,7 @@
 .product-form-container form select {
     width: 95%;
     max-width: 100%;
-    padding: 12px 14px;;
+    padding: 12px 14px;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 1rem;
@@ -49,8 +49,8 @@
 .product-form-container form input:focus,
 .product-form-container form textarea:focus,
 .product-form-container form select:focus {
-    border-color: #66bb6a;
-    box-shadow: 0 0 5px rgba(102, 187, 106, 0.4);
+    border-color: #42a5f5; /* blue border focus */
+    box-shadow: 0 0 5px rgba(66, 165, 245, 0.4);
     outline: none;
 }
 
@@ -62,7 +62,7 @@
 .product-form-container form button {
     width: 100%;
     padding: 12px;
-    background-color: #4caf50;
+    background-color: #2196f3; /* blue button */
     color: #ffffff;
     border: none;
     border-radius: 6px;
@@ -73,7 +73,7 @@
 }
 
 .product-form-container form button:hover {
-    background-color: #388e3c;
+    background-color: #1565c0; /* darker blue on hover */
     transform: translateY(-1px);
 }
 
