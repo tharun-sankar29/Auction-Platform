@@ -194,7 +194,7 @@ router.post('/add', upload.single('image-upload'), async (req, res) => {
         return res.status(400).json({ message: 'Invalid start or end time' });
       }
   
-      const imageFile = req.file ? `/images/auction-items/${req.file.filename}` : null;
+      const imageFile = req.file ? `/images/auction-items/${req.file.filename}` : 'images/404.png';
   
       const newAuction = new Auctions({
         title: name,
