@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
     const newPayment = new Payment({
       user_id: userId,
       dead_id: deadId,       // This links to the auction (or "dead" auction)
-      payment_status: 'Pending',  // You may update the status after successful processing
+      payment_status: 'Pending',  
       amount: amt,
       payment_method: payment_method
     });
