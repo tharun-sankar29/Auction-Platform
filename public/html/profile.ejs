@@ -72,7 +72,8 @@
                 <% wonAuctions.forEach(function(item) { %>
                   <li>
                     <strong><%= item.title %></strong> - Won for ₹<%= item.maxamount %>
-                  </li>
+                    <a href="public/html/payment.ejs?deadId=<%= item._id %>" class="payment-btn">Payment</a>
+                   </li>
                 <% }); %>
               </ul>
             <% } else { %>

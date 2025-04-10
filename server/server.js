@@ -90,6 +90,9 @@ app.get('/', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../public/html/home.html'));  // Serve home.html
 });
 
+const paymentRoutes = require('../public/js/paymentRouting.js'); // adjust the path if needed
+app.use('/payments', paymentRoutes);
+
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}...`);

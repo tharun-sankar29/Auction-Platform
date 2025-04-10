@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {Auction} = require('./schema/schema');
+const {Auction, Dead} = require('./schema/schema');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const path = require('path');
@@ -288,5 +288,14 @@ router.post('/add', upload.single('image-upload'), async (req, res) => {
       res.status(500).send('Deletion Failed');
     }
   });
+
+router.get('/', async(req,res) => {
+  try {
+    const dead = await Dead.find();
+    res.status(200).json(dead);
+  } catch (err) {
+    res.status(500).json({ message: 'Cant find auction'});
+  }
+})
 
 module.exports = router;
