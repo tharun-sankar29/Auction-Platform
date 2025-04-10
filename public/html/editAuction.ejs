@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Auction</title>
-</head>
     <style>
         body {
           font-family: Arial, sans-serif;
@@ -36,12 +35,21 @@
         button:hover {
           background-color: #155d8b;
         }
-      </style>   
+        a {
+          color: #007bff;
+          text-decoration: none;
+          font-size: 16px;
+        }
+        a:hover {
+          text-decoration: underline;
+        }
+    </style>   
+</head>
 <body>
     <div class="container">
         <h1>Edit Auction</h1>
 
-        <form action="/auctions/edit/<%= auction._id %>" method="POST">
+        <form id="editAuctionForm">
             <div class="form-group">
                 <label for="title">Title:</label>
                 <input type="text" id="title" name="title" value="<%= auction.title %>" required>
@@ -69,5 +77,39 @@
         <br>
         <a href="/auth/profile">← Back to Profile</a>
     </div>
+
+
+    <script>
+      document.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(e.target);
+  const data = new URLSearchParams(formData);
+
+  try {
+    const response = await fetch(e.target.action, {
+      method: 'POST',
+      body: data,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+
+    const responseData = await response.json();  // Parse the JSON response
+    if (response.ok) {
+      alert(responseData.message || 'Auction updated successfully');
+      window.location.href = '/auth/profile';
+    } else {
+      alert(responseData.message || 'An error occurred');
+    }
+  } catch (err) {
+    alert('Failed to update auction');
+    console.error(err);
+  }
+});
+
+    </script>
+
+    
 </body>
 </html>

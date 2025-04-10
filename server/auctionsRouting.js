@@ -238,42 +238,53 @@ router.post('/add', upload.single('image-upload'), async (req, res) => {
 });
 
   
-  router.get('/edit/:id', async (req, res) => {
-    try {
-      const auction = await Auction.findById(req.params.id);
-      if (!auction || auction.seller_id.toString() !== req.session.user_id) {
-        return res.status(403).send('Unauthorized');
-      }
-      res.render('editAuction', { auction });
-    } catch (err) {
-      res.status(500).send('Server Error');
+router.get('/edit/:id', async (req, res) => {
+  try {
+    const auction = await Auction.findById(req.params.id);
+    if (!auction || auction.seller_id.toString() !== req.session.user_id) {
+      return res.status(403).send('Unauthorized');
     }
-  });
-  
-  // POST to update auction
-  router.post('/edit/:id', async (req, res) => {
-    const { title, description, startingPrice, endTime } = req.body;
-    try {
-      const auction = await Auction.findById(req.params.id);
-      if (!auction || auction.seller_id.toString() !== req.session.user_id) {
-        return res.status(403).send('Unauthorized');
-      }
-  
-      auction.title = title;
-      auction.description = description;
-      auction.price = startingPrice; // Keep name consistent
-      auction.end_time = new Date(endTime);
-      await auction.save();
-  
-      res.redirect('/profile');
-      if (auction.end_time <= new Date()) {
-        return res.status(403).send('Auction has ended and cannot be modified.');
+    res.render('editAuction', { auction });
+  } catch (err) {
+    res.status(500).send('Server Error');
+  }
+});
+
+// POST to update auction
+// POST to update auction
+router.post('/edit/:id', async (req, res) => {
+  const { title, description, startingPrice, endTime } = req.body;
+
+  try {
+    const auction = await Auction.findById(req.params.id);
+
+    // Check if auction exists and if the current user is the seller
+    if (!auction || auction.seller_id.toString() !== req.session.user_id) {
+      return res.status(403).json({ message: 'Unauthorized' });
     }
+
+    // Check if the auction has ended (no modifications allowed)
+    if (auction.end_time <= new Date()) {
+      return res.status(403).json({ message: 'Auction has ended and cannot be modified.' });
+    }
+
+    // Proceed to update auction
+    auction.title = title;
+    auction.description = description;
+    auction.price = startingPrice; // Keep name consistent
+    auction.end_time = new Date(endTime); // Convert to Date object
+
+    await auction.save();
+
+    // Send a success response
+    res.status(200).json({ message: 'Auction updated successfully' });
     
-    } catch (err) {
-      res.status(500).send('Update Failed');
-    }
-  });
+  } catch (err) {
+    res.status(500).json({ message: 'Update Failed', error: err.message });
+  }
+});
+
+
   
   // POST to delete auction
   router.post('/delete/:id', async (req, res) => {
@@ -284,7 +295,7 @@ router.post('/add', upload.single('image-upload'), async (req, res) => {
       }
   
       await Auction.deleteOne({ _id: req.params.id });
-      res.redirect('/profile');
+      res.redirect('/auth/profile');
       if (auction.end_time <= new Date()) {
         return res.status(403).send('Auction has ended and cannot be modified.');
     }
