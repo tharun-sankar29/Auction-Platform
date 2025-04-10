@@ -4,19 +4,23 @@ const {Auction, Dead} = require('./schema/schema');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs')
 
 const Auctions = Auction;
 
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, 'public', 'images', 'auction-items'));
+    const uploadPath = path.join(__dirname, '../public/images/auction-items');
+    fs.mkdirSync(uploadPath, { recursive: true });
+    cb(null, uploadPath);
   },
   filename: function (req, file, cb) {
     const uniqueName = Date.now() + path.extname(file.originalname);
     cb(null, uniqueName);
   }
 });
+
 
 const upload = multer({ storage });
 
@@ -172,6 +176,7 @@ router.post('/add', upload.single('image-upload'), async (req, res) => {
     const isSessionValid = validateSession(req, res);
     if (!isSessionValid) return;
   
+  
     try {
       const {
         name,
@@ -179,7 +184,7 @@ router.post('/add', upload.single('image-upload'), async (req, res) => {
         price,
         description,
         'start-time': startTime,
-        'end-time': endTime
+        'end-time': endTime,
       } = req.body;
   
       const parsedStartTime = new Date(startTime);

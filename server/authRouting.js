@@ -73,8 +73,13 @@ router.get('/profile', async (req, res) => {
         const userId = req.session.user_id;
         const userData = await User.findById(userId);
 
+        const allAuctions = await Auction.find({});
+        console.log(allAuctions);
+
+
         const soldData = await Auction.find({ seller_id: userId });
         const activeAuctions = await Auction.find({ seller_id: userId, end_time: { $gt: new Date() } });
+
 
         // Find all auctions where bidding has ended
         const endedAuctions = await Auction.find({
