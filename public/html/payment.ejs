@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Payment</title>
-    <link rel="stylesheet" href="/css/payment.css">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/payment.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-      $(document).ready(function() {
+      $(document).ready(function () {
         $(".dispGpay").hide();
         $(".dispNet").hide();
-        $("#paymentBtn").prop('disabled', true);
+        $("#paymentBtn").prop("disabled", true);
 
-        $(".gpay").click(function() {
+        $(".gpay").click(function () {
           $(".dispGpay").show();
           $(".dispNet").hide();
           clearNetInputs();
@@ -21,7 +21,7 @@
           checkDetails();
         });
 
-        $(".net").click(function() {
+        $(".net").click(function () {
           $(".dispNet").show();
           $(".dispGpay").hide();
           clearGpayInputs();
@@ -30,64 +30,87 @@
         });
 
         function clearGpayInputs() {
-          $("#email").val('');
-          $("#ID").val('');
-          $("#amt").val('<%= amount %>');
+          $("#email").val("");
+          $("#ID").val("");
+          $("#amt").val("<%= amount %>");
         }
 
         function clearNetInputs() {
-          $("#netUser").val('');
-          $("#netPass").val('');
-          $("#netAmt").val('<%= amount %>');
+          $("#netUser").val("");
+          $("#netPass").val("");
+          $("#netAmt").val("<%= amount %>");
         }
 
-        function checkDetails(){
+        function checkDetails() {
           var gpayVisible = $(".dispGpay").is(":visible");
           var netVisible = $(".dispNet").is(":visible");
           var gpayValid = true;
           var netValid = true;
-  
-          if(gpayVisible){
-            if($("#email").val() === "" || $("#ID").val() === "" || $("#amt").val() === ""){
+
+          if (gpayVisible) {
+            if (
+              $("#email").val() === "" ||
+              $("#ID").val() === "" ||
+              $("#amt").val() === ""
+            ) {
               gpayValid = false;
             }
           }
-  
-          if(netVisible){
-            if($("#bank").val() === "" || $("#netUser").val() === "" || $("#netPass").val() === "" || $("#netAmt").val() === ""){
+
+          if (netVisible) {
+            if (
+              $("#bank").val() === "" ||
+              $("#netUser").val() === "" ||
+              $("#netPass").val() === "" ||
+              $("#netAmt").val() === ""
+            ) {
               netValid = false;
             }
           }
-  
-          if((gpayVisible && gpayValid) || (netVisible && netValid)){
-            $("#paymentBtn").prop('disabled', false);
+
+          if ((gpayVisible && gpayValid) || (netVisible && netValid)) {
+            $("#paymentBtn").prop("disabled", false);
           } else {
-            $("#paymentBtn").prop('disabled', true);
+            $("#paymentBtn").prop("disabled", true);
           }
         }
 
-        $("input, select").on("input change", function() {
+        $("input, select").on("input change", function () {
           checkDetails();
+        });
+
+        // Handle form submit
+        $("#paymentForm").on("submit", function (e) {
+          e.preventDefault(); // prevent default
+          alert("Auction payment completed!");
+          window.location.href = "/home.html"; // redirect
         });
       });
     </script>
   </head>
   <body>
     <h1>Make Payment</h1>
-    <form action="home.html" method="post">
-      <input type="hidden" name="deadId" value="<%= deadId %>">
+    <form id="paymentForm">
+      <input type="hidden" name="deadId" value="<%= deadId %>" />
+
       <div class="pay">
-        <p class="gpay" style="cursor:pointer;">Pay via Gpay</p>
+        <p class="gpay" style="cursor: pointer">Pay via Gpay</p>
         <div class="dispGpay">
           <label for="email">Email</label>
-          <input type="email" name="email" id="email">
+          <input type="email" name="email" id="email" />
           <label for="ID">Enter ID</label>
-          <input type="number" name="ID" id="ID">
+          <input type="number" name="ID" id="ID" />
           <label for="amt">Amount</label>
-          <input type="number" step="0.01" name="amt" id="amt" value="<%= amount %>">
+          <input
+            type="number"
+            step="0.01"
+            name="amt"
+            id="amt"
+            value="<%= amount %>"
+          />
         </div>
-  
-        <p class="net" style="cursor:pointer;">Pay via Net Banking</p>
+
+        <p class="net" style="cursor: pointer">Pay via Net Banking</p>
         <div class="dispNet">
           <label for="bank">Select Bank</label>
           <select id="bank" name="bank">
@@ -97,14 +120,21 @@
             <option value="Axis Bank">Axis Bank</option>
           </select>
           <label for="netUser">User ID</label>
-          <input type="text" name="netUser" id="netUser">
+          <input type="text" name="netUser" id="netUser" />
           <label for="netPass">Password</label>
-          <input type="password" name="netPass" id="netPass">
+          <input type="password" name="netPass" id="netPass" />
           <label for="netAmt">Amount</label>
-          <input type="number" step="0.01" name="netAmt" id="netAmt" value="<%= amount %>">
+          <input
+            type="number"
+            step="0.01"
+            name="netAmt"
+            id="netAmt"
+            value="<%= amount %>"
+          />
         </div>
       </div>
-      <input type="hidden" name="payment_method" value="" id="payment_method">
+
+      <input type="hidden" name="payment_method" value="" id="payment_method" />
       <button type="submit" id="paymentBtn">Make Payment</button>
     </form>
   </body>

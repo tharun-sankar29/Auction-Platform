@@ -157,7 +157,7 @@ router.post('/payment/:id', async (req, res) => {
 
 
 // Route to show payment page
-router.get('/paymentPage/:id', async (req, res) => {
+router.get('/paymentPage', async (req, res) => {
       
       
     try {
