@@ -238,7 +238,7 @@ router.post('/add', upload.single('image-upload'), async (req, res) => {
 });
 
   
-  router.get('auctions/edit/:id', async (req, res) => {
+  router.get('/edit/:id', async (req, res) => {
     try {
       const auction = await Auction.findById(req.params.id);
       if (!auction || auction.seller_id.toString() !== req.session.user_id) {
@@ -251,7 +251,7 @@ router.post('/add', upload.single('image-upload'), async (req, res) => {
   });
   
   // POST to update auction
-  router.post('auctions/edit/:id', async (req, res) => {
+  router.post('/edit/:id', async (req, res) => {
     const { title, description, startingPrice, endTime } = req.body;
     try {
       const auction = await Auction.findById(req.params.id);
@@ -276,7 +276,7 @@ router.post('/add', upload.single('image-upload'), async (req, res) => {
   });
   
   // POST to delete auction
-  router.post('auctions/delete/:id', async (req, res) => {
+  router.post('/delete/:id', async (req, res) => {
     try {
       const auction = await Auction.findById(req.params.id);
       if (!auction || auction.seller_id.toString() !== req.session.user_id) {

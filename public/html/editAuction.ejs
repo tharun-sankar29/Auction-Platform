@@ -41,7 +41,7 @@
     <div class="container">
         <h1>Edit Auction</h1>
 
-        <form action="auctions/edit/<%= auction._id %>" method="POST">
+        <form action="/auctions/edit/<%= auction._id %>" method="POST">
             <div class="form-group">
                 <label for="title">Title:</label>
                 <input type="text" id="title" name="title" value="<%= auction.title %>" required>
