@@ -139,10 +139,10 @@ router.post('/payment/:id', async (req, res) => {
   
       const newPayment = new Payment({
         user_id: userId,
-        dead_id: deadId, // This refers to the auction the user won
+        dead_id: deadId, 
         payment_status: 'Pending',
         amount: amt,
-        payment_method // Optional: include it if you're planning to use it
+        payment_method 
       });
   
       await newPayment.save();
