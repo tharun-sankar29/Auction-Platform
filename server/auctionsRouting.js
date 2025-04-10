@@ -55,17 +55,20 @@ router.get('/all', async (req, res) => {
 router.get('/featured', async (req, res) => {
   try {
       const featuredAuctions = await Auctions
-          .find({ "bids.0": { "$exists": true } }) // 6 or more bids
-          .sort({ end_time: 1 }) // optional: sort by auction end time
-          .limit(5); // limit to 5 auctions
+          .find({ 
+              "bids.0": { "$exists": true },
+              end_time: { $gt: new Date() }  // Only active auctions
+          })
+          .sort({ end_time: 1 })
+          .limit(5);
 
       res.status(200).json(featuredAuctions);
-
   } catch (err) {
       console.error('Error fetching featured auctions:' + err);
       res.status(500).json({ message: 'Server Error Failed to fetch auctions...' });
   }
 });
+
 
 
 
@@ -214,19 +217,22 @@ router.post('/add', upload.single('image-upload'), async (req, res) => {
   
   router.get('/', async (req, res) => {
     try {
-      const searchTerm = req.query.search;
-      // If there is a search term, create a query that filters by title using regex for a case-insensitive match
-      const query = searchTerm && searchTerm !== "all"
-        ? { title: { $regex: searchTerm, $options: 'i' } }
-        : {};
-  
-      const auctions = await Auction.find(query);
-      res.json(auctions);
+        const searchTerm = req.query.search;
+        // Only return auctions that have not yet ended.
+        const activeFilter = { end_time: { $gt: new Date() } };
+        
+        const query = searchTerm && searchTerm !== "all"
+            ? { title: { $regex: searchTerm, $options: 'i' }, ...activeFilter }
+            : activeFilter;
+        
+        const auctions = await Auction.find(query);
+        res.json(auctions);
     } catch (error) {
-      console.error('Error fetching auctions:', error);
-      res.status(500).send('Error fetching auctions');
+        console.error('Error fetching auctions:', error);
+        res.status(500).send('Error fetching auctions');
     }
-  });
+});
+
   
   router.get('auctions/edit/:id', async (req, res) => {
     try {
